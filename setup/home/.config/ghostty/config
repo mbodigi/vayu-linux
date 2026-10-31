@@ -9,14 +9,13 @@ working-directory = home
 window-padding-x = 12
 window-padding-y = 12
 background-opacity = 1.0
-background-blur-radius = 32
 
 # Cursor Configuration
 cursor-style = block
 cursor-style-blink = true
 
 # Scrollback
-scrollback-limit = 3023
+scrollback-limit = 10000000
 
 # Terminal features
 mouse-hide-while-typing = true
@@ -35,16 +34,15 @@ keybind = ctrl+plus=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 keybind = ctrl+zero=reset_font_size
 
-# Material 3 UI elements
+# Unfocused splits are dimmed; their fill color comes from the matugen theme
 unfocused-split-opacity = 0.7
-unfocused-split-fill = #44464f
 
 # Tab configuration
 gtk-titlebar = false
 
 # Shell integration
 shell-integration = detect
-shell-integration-features = cursor,sudo,title,no-cursor
+shell-integration-features = sudo,title,no-cursor
 keybind = shift+enter=text:\n
 
 # Rando stuff
@@ -53,6 +51,4 @@ gtk-single-instance = true
 # matugen colors
 theme = matugen
 
-# Selection uses the same soft gray accent as the rest of the desktop
-selection-background = #505050
-selection-foreground = #ffffff
+# Selection colors come from the matugen theme (same accent as the rest of the desktop)

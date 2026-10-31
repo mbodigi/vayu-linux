@@ -1,0 +1,12 @@
+$include /etc/inputrc
+
+# Tab completion: ignore case, show matches on the first Tab, colored like ls
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set colored-stats on
+set colored-completion-prefix on
+set mark-symlinked-directories on
+
+# Up/Down search history for what's already typed (type "git", press Up)
+"\e[A": history-search-backward
+"\e[B": history-search-forward

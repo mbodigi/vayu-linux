@@ -16,10 +16,10 @@ Singleton {
     readonly property color text: c("on_surface", "#e2e2e2")
     readonly property color textMuted: c("on_surface_variant", "#c6c6c6")
     readonly property color outline: c("outline", "#919191")
-    // accent is a fixed soft gray everywhere (GTK, Qt, mango and the dock use the same values)
-    readonly property color primary: "#505050"          // highlight fill: active tile, selected tab, today
-    readonly property color accentLine: "#8a8a8a"       // thin accents: slider/OSD fill, focus outlines
-    readonly property color textOnPrimary: "#ffffff"
+    // accent follows matugen everywhere (GTK, Qt, mango, Ghostty and the dock use the same colors)
+    readonly property color primary: c("secondary_container", "#474747")        // highlight fill: active tile, selected tab, today
+    readonly property color accentLine: c("outline", "#919191")                  // thin accents: slider/OSD fill, focus outlines
+    readonly property color textOnPrimary: c("on_secondary_container", "#e2e2e2")
     readonly property color error: c("error", "#ffb4ab")
     readonly property color grayAccent: Qt.rgba(1, 1, 1, 0.26)   // flat bar: active tag / open panel
 
