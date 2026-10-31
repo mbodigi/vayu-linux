@@ -1,6 +1,7 @@
 pragma Singleton
 // Captive portal (hotel/airport Wi-Fi login): NetworkManager's connectivity check reports "portal",
-// we show a notification that opens the login page in the default browser.
+// we open the login page in Brave on tag 5 straight away (LibreWolf's HTTPS-only mode can
+// block the plain http page the portal needs) and show a notification that can reopen it.
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -13,16 +14,19 @@ Singleton {
     // plain http so the portal can redirect it
     readonly property string loginUrl: "http://neverssl.com"
 
-    function openLogin() { Quickshell.execDetached(["xdg-open", root.loginUrl]); }
+    function openLogin() {
+        Quickshell.execDetached(["brave-browser", "--new-window", root.loginUrl]);
+        Quickshell.execDetached(["mmsg", "dispatch", "view,5"]);
+    }
 
     function notify() {
         Quickshell.execDetached(["sh", "-c",
-            'a=$(notify-send -a "Wi-Fi" -i network-wireless -u critical -A default=Log\\ in -A open=Log\\ in ' +
-            '"Wi-Fi login required" "This network needs you to sign in. Click to open the login page.")\n' +
-            '[ -n "$a" ] && xdg-open "$1"', "sh", root.loginUrl]);
+            'a=$(notify-send -a "Wi-Fi" -i network-wireless -u critical -A default=Reopen -A open=Reopen ' +
+            '"Wi-Fi login required" "The login page is open in Brave on tag 5. Click to open it again.")\n' +
+            '[ -n "$a" ] && brave-browser --new-window "$1" && mmsg dispatch view,5', "sh", root.loginUrl]);
     }
 
-    onPortalChanged: if (portal) notify()
+    onPortalChanged: if (portal) { openLogin(); notify(); }
 
     // state at startup
     Process {
