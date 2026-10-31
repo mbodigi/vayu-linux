@@ -32,6 +32,7 @@ home_items=(
     .local/share/icons/Fluent-grey/symbolic/actions/selection-mode-symbolic.svg .local/share/icons/Fluent-grey/symbolic/actions/system-search-symbolic.svg
     .local/share/icons/Fluent-grey/symbolic/actions/view-more-symbolic.svg .local/share/icons/Fluent-grey/symbolic/actions/window-close-symbolic.svg
     .local/state/shell/settings.json .local/state/shell/colors.json .local/state/shell/wallpaper
+    .bashrc.d .inputrc .config/blesh .local/share/blesh
 )
 # Iotas settings for new users are written here, not copied (the live keyfile has window size and first-start state)
 mkdir -p "$S/home/.var/app/org.gnome.World.Iotas/config/glib-2.0/settings"
@@ -43,11 +44,15 @@ for p in "${home_items[@]}"; do
     cp -a "$H/$p" "$S/home/$p"
 done
 
-# personal Brave web apps (YouTube, Netflix…) aren't part of the setup: drop their dock pins
-python3 -I -c 'import json,re,sys; p=sys.argv[1]; d=json.load(open(p)); d["dockPins"]=[x for x in d.get("dockPins",[]) if not re.match(r"^brave-.*-Default$",x)]; open(p,"w").write(json.dumps(d,indent=2))' "$S/home/.local/state/shell/settings.json"
+# personal web apps (YouTube, Netflix…) aren't part of the setup: drop their dock pins
+python3 -I -c 'import json,re,sys; p=sys.argv[1]; d=json.load(open(p)); d["dockPins"]=[x for x in d.get("dockPins",[]) if not re.match(r"^brave-.*-Default$|.*-webapp$",x)]; open(p,"w").write(json.dumps(d,indent=2))' "$S/home/.local/state/shell/settings.json"
+# ...and their window rules, except YouTube's (the shipped YouTube web app)
+sed -i '/app_id:^brave-.*-Default\$$/{/youtube/!d}' "$S/home/.config/mango/conf.d/windowrules.conf"
 
 # leftovers that aren't setup
 find "$S/home" \( -name '*.bak*' -o -name '*.backup*' -o -name '.git' -o -name 'node_modules' \) -prune -exec rm -rf {} +
+# ble.sh's runtime cache, and the Fedora logo fastfetch no longer uses
+rm -rf "$S/home/.local/share/blesh/cache.d" "$S/home/.local/share/blesh/run" "$S/home/.config/fastfetch/fedora.png"
 
 # portability: helper scripts move to /usr/local/bin, the home path becomes @HOME@ (filled in per user)
 grep -rlI "$H/.local/bin/" "$S/home" | xargs -r sed -i "s#$H/.local/bin/#/usr/local/bin/#g"
@@ -73,6 +78,7 @@ sys_items=(
     /etc/dnf/dnf.conf /etc/dnf/repos.override.d/90-vayu.repo
     "/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:errornointernet:quickshell.repo"
     /etc/yum.repos.d/brave-browser.repo /etc/yum.repos.d/librewolf.repo
+    "/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:scottames:ghostty.repo"
 )
 for p in "${sys_items[@]}"; do
     mkdir -p "$S/root$(dirname "$p")"

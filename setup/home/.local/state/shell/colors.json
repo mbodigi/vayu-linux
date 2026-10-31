@@ -7,6 +7,8 @@
             "on_surface": "#e2e2e2",
             "on_surface_variant": "#c6c6c6",
             "outline": "#919191",
+            "secondary_container": "#474747",
+            "on_secondary_container": "#e2e2e2",
             "primary": "#ffffff",
             "on_primary": "#1b1b1b",
             "primary_container": "#d4d4d4",

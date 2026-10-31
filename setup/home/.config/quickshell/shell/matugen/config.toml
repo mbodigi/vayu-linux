@@ -32,6 +32,12 @@ post_hook = 'mmsg dispatch reload_config'
 input_path = '~/.config/quickshell/shell/matugen/templates/shell-colors.json'
 output_path = '/var/cache/shell-greeter/colors.json'
 
+# pywal-format colors for Pywalfox (LibreWolf add-on), which themes the browser live
+[templates.wal]
+input_path = '~/.config/quickshell/shell/matugen/templates/wal-colors.json'
+output_path = '~/.cache/wal/colors.json'
+post_hook = 'sh -c "command -v pywalfox >/dev/null && pywalfox update || true"'
+
 # Ghostty theme "matugen" (theme = matugen in ~/.config/ghostty/config); SIGUSR2 makes Ghostty reload it live
 [templates.ghostty]
 input_path = '~/.config/quickshell/shell/matugen/templates/ghostty-colors'

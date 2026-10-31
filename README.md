@@ -26,7 +26,7 @@ Vayu Linux. What that layer changes:
 | **Boot** | A Plymouth boot splash with the Vayu logo (`setup/root/usr/share/plymouth/themes/vayu`), Fedora's spinner animation below it; boot menu entries are named Vayu Linux. systemd-boot where it's safe (see Install). |
 | **Logo** | [`vayu.svg`](setup/home/.config/fastfetch/vayu.svg), shown by fastfetch and used for the OS icon (`vayu-logo-icon`) |
 | **System** | Power profiles that follow the charger, the `scx_lavd` scheduler, zstd-compressed zram swap |
-| **Packages** | Extra repos (RPM Fusion, terra, Quickshell COPR, Brave, LibreWolf) and the package list in `setup/packages.txt` |
+| **Packages** | Extra repos (RPM Fusion, terra, Quickshell and Ghostty COPRs, Brave, LibreWolf) and the package list in `setup/packages.txt` |
 
 Everything else (kernel, system libraries, security updates, release upgrades) comes straight from Fedora.
 Vayu Linux is an independent project and is not affiliated with or endorsed by the Fedora Project.
@@ -59,7 +59,7 @@ That's it.
 
 ### What the installer does
 
-1. **Repos:** adds RPM Fusion, terra, the Quickshell COPR, Brave and LibreWolf.
+1. **Repos:** adds RPM Fusion, terra, the Quickshell and Ghostty COPRs, Brave and LibreWolf.
 2. **Packages:** installs the package list ([`setup/packages.txt`](setup/packages.txt)) and swaps Fedora's limited ffmpeg for the full one. Kernels stay Fedora's own.
 3. **Notes app:** installs Iotas from Flathub, without network access.
 4. **System files:** copies the login screen, power profiles, browser policies and helper scripts from [`setup/root`](setup/root).
@@ -83,6 +83,7 @@ No wallpapers are included, since they're other people's art. Press `Super + Y` 
 - **Browsers:** LibreWolf as the default, and Brave for web apps with its extras (rewards, wallet, AI, telemetry) turned off.
 - **Notes:** [Iotas](https://flathub.org/apps/org.gnome.World.Iotas), with no network access, so your notes never leave the machine.
 - **Video:** Celluloid with hardware decoding and the full ffmpeg.
+- **Terminal:** Ghostty with bash and [ble.sh](https://github.com/akinomyoga/ble.sh): gray suggestions from your history (Tab or → accepts), syntax colors, shared history between windows, and `z <folder>` jumps (zoxide).
 - **Laptop:** ThinkPad battery charging stops at 80% to make the battery last longer (does nothing on other laptops).
 
 ### Performance and power

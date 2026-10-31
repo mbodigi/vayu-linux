@@ -365,9 +365,6 @@ ghostscript
 ghostscript-tools-fontutils
 ghostscript-tools-printing
 ghostty
-ghostty-bash-completion
-ghostty-shell-integration
-ghostty-terminfo
 giflib
 git-core
 glib2
@@ -1140,6 +1137,7 @@ NetworkManager-config-connectivity-fedora
 NetworkManager-libnm
 NetworkManager-ppp
 NetworkManager-team
+NetworkManager-tui
 NetworkManager-wifi
 NetworkManager-wwan
 newt
@@ -1777,6 +1775,7 @@ zip
 zix
 zlib-ng
 zlib-ng-compat
+zoxide
 zram-generator
 zram-generator-defaults
 zstd

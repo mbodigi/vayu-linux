@@ -38,6 +38,7 @@ ShellRoot {
     Cheatsheet {}
     TaskManager {}
     SettingsPanel {}
-    PolkitDialog {}
+    // registering the polkit agent blocks ~0.1 s; do it right after the first frame
+    LazyLoader { activeAsync: true; PolkitDialog {} }
     Dock {}
 }
