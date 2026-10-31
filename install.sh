@@ -106,19 +106,48 @@ sdboot_ok() {
     free_mb=$(df -m --output=avail /boot/efi | tail -1)
     [ "$free_mb" -ge 300 ] || { echo "only ${free_mb} MB free on the EFI partition: keeping GRUB"; return 1; }
 }
+# every installed kernel has a boot entry on the ESP ($1) whose kernel and initrd files are really there
+sdboot_entries_ok() {
+    n=0
+    for e in "$1"/loader/entries/*.conf; do
+        [ -f "$e" ] || continue
+        grep -q '^linux ' "$e" || { echo "$e has no kernel line"; return 1; }
+        for f in $(awk '$1 == "linux" || $1 == "initrd" { print $2 }' "$e"); do
+            [ -s "$1$f" ] || { echo "$(basename "$e") points to $f, which is missing or empty"; return 1; }
+        done
+        n=$((n + 1))
+    done
+    kernels=$(ls "$2"/*/vmlinuz 2>/dev/null | wc -l)
+    [ "$n" -gt 0 ] && [ "$n" -ge "$kernels" ] || { echo "$n boot entries for $kernels kernels"; return 1; }
+}
 if sdboot_ok; then
-    echo "Switching to systemd-boot…"
+    echo "Setting up systemd-boot…"
     if rpm -q grubby >/dev/null; then dnf -y swap grubby sdubby; else dnf -y install sdubby; fi
     dnf -y install systemd-boot-unsigned
     # kernels go on the EFI partition as boot-loader entries; no rescue image (it doesn't fit there)
     printf 'layout=bls\nBOOT_ROOT=/boot/efi\n' > /etc/kernel/install.conf
     echo 'dracut_rescue_image="no"' > /etc/dracut.conf.d/90-no-rescue.conf
-    [ -s /etc/kernel/cmdline ] || sed -E 's/(^| )(BOOT_IMAGE|initrd)=[^ ]*//g; s/^ +//' /proc/cmdline > /etc/kernel/cmdline
-    bootctl install --esp-path=/boot/efi
-    for k in /usr/lib/modules/*/vmlinuz; do kernel-install add "$(basename "$(dirname "$k")")" "$k"; done
-    printf 'timeout 1\ndefault @saved\n' > /boot/efi/loader/loader.conf
-    n=$(ls /boot/efi/loader/entries/*.conf 2>/dev/null | wc -l)
-    [ "$n" -gt 0 ] && echo "systemd-boot installed with $n kernel entries (GRUB kept as a fallback boot entry)"
+    made_cmdline=
+    [ -s /etc/kernel/cmdline ] || { sed -E 's/(^| )(BOOT_IMAGE|initrd)=[^ ]*//g; s/^ +//' /proc/cmdline > /etc/kernel/cmdline; made_cmdline=1; }
+    # Kernels first, checked, and only then systemd-boot itself, which puts it first in the firmware's boot
+    # order. Until that point the PC still boots GRUB, so a failure here can be undone without touching it.
+    for k in /usr/lib/modules/*/vmlinuz; do
+        kernel-install --make-entry-directory=yes add "$(basename "$(dirname "$k")")" "$k" || true
+    done
+    if why=$(sdboot_entries_ok /boot/efi /usr/lib/modules); then
+        bootctl install --esp-path=/boot/efi
+        printf 'timeout 1\ndefault @saved\n' > /boot/efi/loader/loader.conf
+        echo "systemd-boot installed with $(ls /boot/efi/loader/entries/*.conf | wc -l) kernel entries (GRUB kept as a fallback boot entry)"
+    else
+        echo "systemd-boot check failed ($why): undoing it, GRUB stays the bootloader"
+        id=$(cat /etc/machine-id)
+        rm -rf "/boot/efi/$id" /boot/efi/loader/entries/"$id"-*.conf
+        rmdir /boot/efi/loader/entries /boot/efi/loader 2>/dev/null || true
+        rm -f /etc/kernel/install.conf /etc/dracut.conf.d/90-no-rescue.conf
+        [ -z "$made_cmdline" ] || rm -f /etc/kernel/cmdline
+        dnf -y swap sdubby grubby
+        dnf -y remove systemd-boot-unsigned
+    fi
 fi
 EOF
 
