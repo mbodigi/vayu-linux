@@ -17,7 +17,7 @@ mkdir -p "$S/root" "$S/home" "$S/greeter-cache" "$P/home/.local/share/wallpapers
 
 # ---------- user configs -> setup/home ----------
 home_items=(
-    .config/mango .config/quickshell/shell .config/quickshell/greeter
+    .config/mango .config/quickshell/shell
     .config/ghostty .config/gtk-3.0 .config/gtk-4.0 .config/qt5ct .config/qt6ct
     .config/fontconfig .config/fastfetch .config/mpv .config/environment.d
     .config/Thunar .config/xfce4

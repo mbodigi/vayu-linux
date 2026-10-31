@@ -79,7 +79,8 @@ Scope {
     IpcHandler {
         target: "lock"
         function lock(): void { root.lock(); }
-        function testLock(): void { root.lock(); testTimer.start(); }
+        // never on an already locked screen: the timer would unlock it without a password
+        function testLock(): void { if (root.locked) return; root.lock(); testTimer.start(); }
         function isLocked(): bool { return root.locked; }
     }
 

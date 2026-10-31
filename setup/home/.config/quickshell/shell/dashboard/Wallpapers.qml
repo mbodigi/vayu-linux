@@ -77,7 +77,8 @@ ColumnLayout {
                 root.loading = false;
                 try {
                     const d = JSON.parse(text);
-                    root.results = root.results.concat(d.data);
+                    // id and extension end up in a file path: keep only plain ids and image types from the API
+                    root.results = root.results.concat(d.data.filter(w => /^\w+$/.test(w.id) && /^https:\/\/[^?#]+\.(jpe?g|png|webp)$/i.test(w.path)));
                     root.lastPage = d.meta.last_page;
                 } catch (e) {}
             }
