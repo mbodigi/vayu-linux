@@ -13,6 +13,24 @@ Vayu (वायु) is the Sanskrit name of the wind.
 
 <sub>Shown with Fedora 44's default wallpaper (CC BY-SA 4.0, Fedora Design Team). The theme colors are generated from whatever wallpaper you pick.</sub>
 
+## News
+
+**Vayu Linux 45 (2026-11-03): running on the original machine; the installer hasn't been tried on it yet.**
+The original ThinkPad was upgraded from Fedora 44 to Fedora 45's final packages with `dnf system-upgrade`, on the
+release date in Fedora's schedule. It boots the Fedora 45 kernel to our login screen and desktop, `scx_lavd` runs, and
+the fingerprint reader works again after rebuilding its driver. OBS and Screenshot haven't been opened on 45 yet.
+
+The one-line installer is still built from and tested on Fedora 44, so use 44 for now. A package check in a Fedora 45
+container found the third-party packages the desktop needs, and a few old Fedora packages were retired, which the
+installer skips and lists.
+
+**New since then, tested on the original machine on Fedora 44, not yet in a fresh install:**
+- OBS Studio, set up to record the screen, desktop audio and microphone
+- A Screenshot app with annotation (Satty)
+- Screen sharing fixed for every app (it used to fail with "no output found")
+- Ghostty 1.4 and ble.sh suggestions in bash
+- New kernels now boot by default, and systemd-boot is only switched on after its boot entries pass a check
+
 ## How Vayu Linux relates to Fedora
 
 Vayu Linux is a **Fedora derivative**: not a fork that rebuilds Fedora's packages, but a layer on top of a
@@ -22,7 +40,7 @@ Vayu Linux. What that layer changes:
 | Area | What Vayu Linux does |
 |---|---|
 | **Desktop** | MangoWM, our own Quickshell shell and dock, our own login screen (greetd), matugen theming |
-| **Name** | `/etc/os-release` says **Vayu Linux 44** (`NAME`, `PRETTY_NAME`, logo, color), written from Fedora's own file by [`vayu-os-release`](setup/root/usr/local/bin/vayu-os-release) at install, at every boot and before each new kernel gets its boot entry, so a Fedora update or release upgrade that restores the original file doesn't undo it. `ID=fedora` stays, so dnf, repos and scripts that check for Fedora keep working. A default hostname (`fedora`) becomes `vayu`. |
+| **Name** | `/etc/os-release` says **Vayu Linux** and Fedora's version number (`NAME`, `PRETTY_NAME`, logo, color), written from Fedora's own file by [`vayu-os-release`](setup/root/usr/local/bin/vayu-os-release) at install, at every boot and before each new kernel gets its boot entry, so a Fedora update or release upgrade that restores the original file doesn't undo it. `ID=fedora` stays, so dnf, repos and scripts that check for Fedora keep working. A default hostname (`fedora`) becomes `vayu`. |
 | **Boot** | A Plymouth boot splash with the Vayu logo (`setup/root/usr/share/plymouth/themes/vayu`), Fedora's spinner animation below it; boot menu entries are named Vayu Linux. systemd-boot where it's safe (see Install). |
 | **Logo** | [`vayu.svg`](setup/home/.config/fastfetch/vayu.svg), shown by fastfetch and used for the OS icon (`vayu-logo-icon`) |
 | **System** | Power profiles that follow the charger, the `scx_lavd` scheduler, zstd-compressed zram swap |
