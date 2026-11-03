@@ -23,7 +23,7 @@ GridLayout {
             anchors.centerIn: parent
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: Qt.formatDateTime(clock.date, "h:mm")
+                text: Qt.formatDateTime(clock.date, Settings.get("clock24h") ? "HH:mm" : "h:mm")
                 font.pixelSize: 84
                 font.weight: Font.Bold
             }
@@ -44,7 +44,7 @@ GridLayout {
         Label {
             anchors.centerIn: parent
             visible: Weather.temp === ""
-            text: "Loading weather…"
+            text: Weather.failed ? "Weather unavailable" : "Loading weather…"
             color: Theme.outline
         }
 

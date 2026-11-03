@@ -26,8 +26,9 @@ xdg-user-dirs-update 2>/dev/null
 wp=$(cat "$HOME/.local/state/shell/wallpaper" 2>/dev/null)
 if [ ! -f "$wp" ] && [ -f /usr/share/backgrounds/default-dark.jxl ]; then
     for _ in $(seq 20); do
-        qs -c shell ipc call wallpaper set /usr/share/backgrounds/default-dark.jxl 2>/dev/null && break
+        qs -c shell ipc call wallpaper set /usr/share/backgrounds/default-dark.jxl 2>/dev/null && { touch "$marker"; exit 0; }
         sleep 0.5
     done
+    exit 0   # the shell never answered: try again at the next login
 fi
 touch "$marker"

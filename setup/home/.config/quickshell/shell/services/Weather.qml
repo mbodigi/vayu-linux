@@ -13,6 +13,7 @@ Singleton {
     property string location: ""
     property int code: 0
     property var days: []   // [{date, max, min, code}]
+    property bool failed: false
 
     function refresh() { fetch.running = true; }
 
@@ -36,10 +37,21 @@ Singleton {
                         min: w.mintempC + "°",
                         code: Number(w.hourly[4]?.weatherCode ?? 113)
                     }));
-                } catch (e) {}
+                    root.failed = false;
+                } catch (e) {
+                    root.fetchFailed();
+                }
             }
         }
+        onExited: code => { if (code !== 0) root.fetchFailed(); }
     }
+
+    // Wi-Fi often connects a few seconds after login: don't wait for the next half-hour refresh
+    function fetchFailed() {
+        failed = true;
+        retry.start();
+    }
+    Timer { id: retry; interval: 2 * 60 * 1000; onTriggered: fetch.running = true }
 
     Timer {
         interval: 30 * 60 * 1000

@@ -169,7 +169,7 @@ Scope {
 
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: Qt.formatDateTime(clock.date, "h:mm")
+                    text: Qt.formatDateTime(clock.date, Settings.get("clock24h") ? "HH:mm" : "h:mm")
                     font.pixelSize: 110
                     font.weight: Font.Bold
                 }

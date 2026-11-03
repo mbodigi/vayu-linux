@@ -267,7 +267,6 @@ dracut
 dracut-live
 dracut-network
 duktape
-dunst
 e2fsprogs
 e2fsprogs-libs
 ed

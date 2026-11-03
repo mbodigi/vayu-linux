@@ -136,12 +136,12 @@ if sdboot_ok; then
     for k in /usr/lib/modules/*/vmlinuz; do
         kernel-install --make-entry-directory=yes add "$(basename "$(dirname "$k")")" "$k" || true
     done
-    if why=$(sdboot_entries_ok /boot/efi /usr/lib/modules); then
-        bootctl install --esp-path=/boot/efi
+    if why=$(sdboot_entries_ok /boot/efi /usr/lib/modules) && bootctl install --esp-path=/boot/efi; then
         printf 'timeout 1\n' > /boot/efi/loader/loader.conf   # no default: the newest kernel boots, not the last one booted
         echo "systemd-boot installed with $(ls /boot/efi/loader/entries/*.conf | wc -l) kernel entries (GRUB kept as a fallback boot entry)"
     else
-        echo "systemd-boot check failed ($why): undoing it, GRUB stays the bootloader"
+        echo "systemd-boot setup failed ($why): undoing it, GRUB stays the bootloader"
+        bootctl remove --esp-path=/boot/efi 2>/dev/null || true
         id=$(cat /etc/machine-id)
         rm -rf "/boot/efi/$id" /boot/efi/loader/entries/"$id"-*.conf
         rmdir /boot/efi/loader/entries /boot/efi/loader 2>/dev/null || true
