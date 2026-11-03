@@ -15,21 +15,17 @@ Vayu (वायु) is the Sanskrit name of the wind.
 
 ## News
 
-**Vayu Linux 45 (2026-11-03): running on the original machine; the installer hasn't been tried on it yet.**
-The original ThinkPad was upgraded from Fedora 44 to Fedora 45's final packages with `dnf system-upgrade`, on the
-release date in Fedora's schedule. It boots the Fedora 45 kernel to our login screen and desktop, `scx_lavd` runs, and
-the fingerprint reader works again after rebuilding its driver. OBS and Screenshot haven't been opened on 45 yet.
+**Vayu Linux 45 (2026-11-03): now based on Fedora 45.** Tested on the live setup, the original ThinkPad, upgraded from
+Fedora 44: the Fedora 45 kernel, our login screen and desktop, `scx_lavd` and the fingerprint reader. The installer's package
+list and configs now come from this system, and every package in the list is available on Fedora 45.
 
-The one-line installer is still built from and tested on Fedora 44, so use 44 for now. A package check in a Fedora 45
-container found the third-party packages the desktop needs, and a few old Fedora packages were retired, which the
-installer skips and lists.
-
-**New since then, tested on the original machine on Fedora 44, not yet in a fresh install:**
+**Also new:**
 - OBS Studio, set up to record the screen, desktop audio and microphone
 - A Screenshot app with annotation (Satty)
 - Screen sharing fixed for every app (it used to fail with "no output found")
 - Ghostty 1.4 and ble.sh suggestions in bash
 - New kernels now boot by default, and systemd-boot is only switched on after its boot entries pass a check
+- Stable repos only: RPM Fusion's testing repos stay off
 
 ## How Vayu Linux relates to Fedora
 
@@ -184,5 +180,5 @@ that looks like a key or password.
   [greetd](https://kl.wtf/projects/greetd)
 - [Material Symbols](https://fonts.google.com/icons) font (Apache License 2.0), bundled for the shell's icons
 - Demo GIF wallpaper: Fedora 44 default background by the Fedora Design Team, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
-- Built on [Fedora](https://fedoraproject.org) 44. Vayu Linux is not a Fedora Project release.
+- Built on [Fedora](https://fedoraproject.org) 45. Vayu Linux is not a Fedora Project release.
 - Boot splash animation: [Plymouth](https://gitlab.freedesktop.org/plymouth/plymouth)'s spinner theme (GPL-2.0), copied from Fedora's package at install time

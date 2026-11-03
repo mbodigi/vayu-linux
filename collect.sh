@@ -5,7 +5,7 @@
 #   setup/greeter-cache/ the login screen's colors
 #   setup/packages.txt   every installed package name (checked to be installable from the repos)
 #   private/             wallpapers (other people's art, so not committed; see .gitignore)
-# install.sh (or get.sh) installs it on a stock Fedora 44.
+# install.sh (or get.sh) installs it on a stock Fedora.
 # Read-only on the system: everything is copied into this folder.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -114,7 +114,7 @@ cp /var/cache/shell-greeter/wallpaper "$P/greeter-cache/"
 rpm -qa --qf '%{NAME}\n' | grep -vE '^(gpg-pubkey|libreoffice)' | sort -u > "$S/packages.txt"
 # every name must be installable from the repos the installer uses
 avail=$(mktemp)
-dnf repoquery -q --available --qf '%{name}\n' $(cat "$S/packages.txt") 2>/dev/null | sort -u > "$avail"
+dnf repoquery -q --setopt='disable_excludes=*' --available --qf '%{name}\n' $(cat "$S/packages.txt") 2>/dev/null | sort -u > "$avail"
 missing=$(comm -23 "$S/packages.txt" "$avail")
 if [ -n "$missing" ]; then
     echo "Not available in any repo (left out):"; echo "$missing" | sed 's/^/  /'

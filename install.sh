@@ -37,6 +37,8 @@ dnf -y install \
     "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$rel.noarch.rpm"
 rpm -q terra-release >/dev/null || dnf -y install --nogpgcheck --repofrompath "terra,https://repos.fyralabs.com/terra$rel" terra-release
 cp "$R"/setup/root/etc/yum.repos.d/*.repo /etc/yum.repos.d/
+# before any package installs: stable repos only (RPM Fusion's early release packages enable testing)
+install -Dm644 "$R"/setup/root/etc/dnf/repos.override.d/90-vayu.repo /etc/dnf/repos.override.d/90-vayu.repo
 
 # the full ffmpeg from RPM Fusion instead of Fedora's ffmpeg-free (the one swap this does)
 if rpm -q ffmpeg-free >/dev/null; then dnf -y swap ffmpeg-free ffmpeg --allowerasing; fi

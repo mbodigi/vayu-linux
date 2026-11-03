@@ -278,7 +278,6 @@ efi-filesystem
 efivar-libs
 elfutils
 elfutils-debuginfod-client
-elfutils-default-yama-scope
 elfutils-libelf
 elfutils-libs
 emacs-filesystem
@@ -292,6 +291,7 @@ exo
 expat
 f2fs-tools
 f44-backgrounds-base
+f45-backgrounds-base
 faad2-libs
 fastfetch
 fdk-aac-free
@@ -310,6 +310,7 @@ file
 file-libs
 filesystem
 findutils
+fips-provider
 firewalld
 firewalld-filesystem
 flac-libs
@@ -324,8 +325,6 @@ flexiblas-openblas-openmp
 flite
 fluent-icon-theme
 fmt
-fontawesome-6-brands-fonts
-fontawesome-6-free-fonts
 fontconfig
 fonts-filesystem
 fpaste
@@ -349,6 +348,7 @@ garcon
 gawk
 gawk-all-langpacks
 gcc
+gcr
 gcr-libs
 gd
 gdb
@@ -356,7 +356,6 @@ gdb-headless
 gdbm
 gdbm-libs
 gdk-pixbuf2
-gdk-pixbuf2-modules-extra
 geoclue2
 gettext-envsubst
 gettext-libs
@@ -477,10 +476,12 @@ gstreamer1-plugin-libav
 gstreamer1-plugin-openh264
 gstreamer1-plugins-bad-free
 gstreamer1-plugins-bad-free-libs
+gstreamer1-plugins-bad-freeworld
 gstreamer1-plugins-base
 gstreamer1-plugins-good
 gstreamer1-plugins-good-qt
 gstreamer1-plugins-good-qt6
+gstreamer1-plugins-ugly
 gstreamer1-plugins-ugly-free
 gtk3
 gtk4
@@ -622,6 +623,7 @@ kf6-kwidgetsaddons
 kf6-kwindowsystem
 kmod
 kmod-libs
+kmscon
 kpartx
 krb5-libs
 lame-libs
@@ -648,7 +650,6 @@ libavif
 libb2
 libbabeltrace
 libbabeltrace2
-libbasicobjects
 libblkid
 libblkio
 libblockdev
@@ -691,7 +692,6 @@ libcdio
 libcdio-paranoia
 libchromaprint
 libcloudproviders
-libcollection
 libcom_err
 libcomps
 libcue
@@ -704,6 +704,7 @@ libdav1d
 libdbusmenu
 libdbusmenu-gtk3
 libdc1394
+libde265
 libdecor
 libdeflate
 libdhash
@@ -741,6 +742,7 @@ libffi
 libfido2
 libfontenc
 libfprint
+libfreeaptx
 libfsverity
 libftdi
 libfyaml
@@ -768,6 +770,7 @@ libgxps
 libhandy
 libheif
 libheif-ffmpeg
+libheif-freeworld
 libibverbs
 libICE
 libicu
@@ -812,6 +815,7 @@ libmaxminddb
 libmbim
 libmbim-utils
 libmd
+libmediainfo
 libmnl
 libmodplug
 libmodulemd
@@ -845,7 +849,6 @@ libopenmpt
 libosinfo
 libpaper
 libpasswdqc
-libpath_utils
 libpcap
 libpciaccess
 libpfm
@@ -874,7 +877,6 @@ LibRaw
 libraw1394
 librbd1
 librdmacm
-libref_array
 librepo
 libreport
 libreport-anaconda
@@ -942,6 +944,7 @@ libtommath
 libtool-ltdl
 libtpms
 libtraceevent
+libtsm
 libudfread
 libudisks2
 libultrahdr
@@ -956,6 +959,7 @@ libuuid
 libuv
 libv4l
 libva
+libva-intel-driver
 libva-intel-media-driver
 libva-utils
 libvdpau
@@ -1031,6 +1035,7 @@ libxkbcommon
 libxkbcommon-x11
 libxkbfile
 libxml2
+libxml2_2.13
 libxmlb
 libXmu
 libXpm
@@ -1047,10 +1052,10 @@ libXv
 libXxf86vm
 libyaml
 libyuv
+libzen
 libzip
 libzstd
 lilv-libs
-linux-atm-libs
 linux-firmware
 linux-firmware-whence
 livesys-scripts
@@ -1135,6 +1140,7 @@ ndctl-libs
 netavark
 net-snmp-libs
 nettle
+nettle3.10
 net-tools
 NetworkManager
 NetworkManager-adsl
@@ -1207,6 +1213,7 @@ openssh
 openssh-clients
 openssh-server
 openssl
+openssl3-libs
 openssl-libs
 open-vm-tools
 open-vm-tools-desktop
@@ -1245,10 +1252,12 @@ pcre2-utf16
 pcsc-lite
 pcsc-lite-ccid
 pcsc-lite-libs
+pdfio
 pinentry
 pinfo
 pipewire
 pipewire-alsa
+pipewire-codec-aptx
 pipewire-config-raop
 pipewire-gstreamer
 pipewire-jack-audio-connection-kit
@@ -1293,7 +1302,8 @@ ppp
 prefixdevname
 procps-ng
 protobuf
-protobuf-c
+protobuf3-c
+protobuf-cpp
 psacct
 psmisc
 publicsuffix-list-dafsa
@@ -1323,7 +1333,10 @@ python3-cups
 python3-dasbus
 python3-dateutil
 python3-dbus
+python3-dbus-client-gen
 python3-dbus-next
+python3-dbus-python-client-gen
+python3-dbus-signature-pyparsing
 python3-distro
 python3-dnf
 python3-dnf-plugins-core
@@ -1337,9 +1350,11 @@ python3-html2text
 python3-humanize
 python3-i3ipc
 python3-idna
-python3-inotify
+python3-into-dbus-python
 python3-iso639
 python3-jmespath
+python3-justbases
+python3-justbytes
 python3-kickstart
 python3-langtable
 python3-libcomps
@@ -1377,6 +1392,8 @@ python3-ptyprocess
 python3-pwquality
 python3-pycparser
 python3-pycryptodomex
+python3-pyinotify
+python3-pyparsing
 python3-pyparted
 python3-pypdf
 python3-pysocks
@@ -1401,6 +1418,7 @@ python3-typing-extensions
 python3-unbound
 python3-urllib3
 python3-urllib3+socks
+python3-wcwidth
 python3-websockets
 python3-xkbregistry
 python3-xlib
@@ -1422,7 +1440,6 @@ qemu-audio-spice
 qemu-block-blkio
 qemu-block-curl
 qemu-block-dmg
-qemu-block-gluster
 qemu-block-iscsi
 qemu-block-nfs
 qemu-block-rbd
@@ -1517,6 +1534,8 @@ re2
 readline
 realmd
 realtek-firmware
+redhat-systemd-presets
+redhat-systemd-presets-common
 rit-meera-new-fonts
 rit-rachana-fonts
 rnnoise
@@ -1524,7 +1543,9 @@ rootfiles
 rpcbind
 rpm
 rpm-build-libs
+rpmfusion-free-appstream-data
 rpmfusion-free-release
+rpmfusion-nonfree-appstream-data
 rpmfusion-nonfree-release
 rpm-libs
 rpm-plugin-audit
@@ -1607,11 +1628,15 @@ sssd-nfs-idmap
 sssd-proxy
 startup-notification
 stix-fonts
+stratis-cli
+stratisd
+stratisd-dracut
 subversion
 subversion-libs
 sudo
 sudo-python-plugin
 svt-av1-libs
+svt-hevc-libs
 swtpm
 swtpm-libs
 swtpm-selinux
@@ -1624,6 +1649,7 @@ system-config-printer-udev
 systemd
 systemd-boot-unsigned
 systemd-container
+systemd-import-keys
 systemd-libs
 systemd-networkd
 systemd-oomd-defaults
@@ -1650,6 +1676,7 @@ thrift
 Thunar
 time
 tinysparql
+tinyxml2
 tiwilink-firmware
 tmux
 totem-pl-parser
@@ -1716,6 +1743,7 @@ volume_key-libs
 vte291
 vte-profile
 vulkan-loader
+vvdec-libs
 vvenc-libs
 wavpack
 wcurl
