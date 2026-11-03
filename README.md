@@ -57,6 +57,8 @@ Vayu Linux is an independent project and is not affiliated with or endorsed by t
 
 That's it.
 
+**Or use the ISO:** download the [net-install ISO](https://github.com/mbodigi/vayu-linux/releases/latest), write it to a USB stick, boot from it and follow the installer. It needs internet during the install, since packages download as it runs.
+
 <details>
 <summary>Details</summary>
 
