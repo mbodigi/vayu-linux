@@ -60,6 +60,8 @@ rm -rf "$S/home/.local/share/blesh/cache.d" "$S/home/.local/share/blesh/run" "$S
 
 # portability: helper scripts move to /usr/local/bin, the home path becomes @HOME@ (filled in per user)
 grep -rlI "$H/.local/bin/" "$S/home" | xargs -r sed -i "s#$H/.local/bin/#/usr/local/bin/#g"
+# qBittorrent at login is this machine's habit, not something to start for everyone
+sed -i '/^# qBittorrent on tag 9/,/^exec_once=.*qbittorrent/d' "$S/home/.config/mango/config.conf"
 grep -q shell-firstlogin "$S/home/.config/mango/config.conf" ||
     printf '\n# first login of a new user: dconf settings (fonts, theme, Celluloid)\nexec_once=/usr/local/bin/shell-firstlogin\n' >> "$S/home/.config/mango/config.conf"
 grep -rlI "$H" "$S/home" | xargs -r sed -i "s#$H#@HOME@#g"
@@ -111,7 +113,8 @@ cp -a "$H"/.local/share/wallpapers/. "$P/home/.local/share/wallpapers/"
 cp /var/cache/shell-greeter/wallpaper "$P/greeter-cache/"
 
 # ---------- packages ----------
-rpm -qa --qf '%{NAME}\n' | grep -vE '^(gpg-pubkey|libreoffice)' | sort -u > "$S/packages.txt"
+# ...minus what only this machine uses: markitdown and its dependencies (they need a local launcher to work)
+rpm -qa --qf '%{NAME}\n' | grep -vE '^(gpg-pubkey|libreoffice|python3-markitdown$|python3-magika$|python3-onnxruntime$|onnx-libs$|cpuinfo$|python3-flatbuffers$|python3-markdownify$|python3-click$|python3-protobuf$)' | sort -u > "$S/packages.txt"
 # every name must be installable from the repos the installer uses
 avail=$(mktemp)
 dnf repoquery -q --setopt='disable_excludes=*' --available --qf '%{name}\n' $(cat "$S/packages.txt") 2>/dev/null | sort -u > "$avail"

@@ -108,12 +108,6 @@ clevis-luks
 clevis-pin-tpm2
 cliphist
 cmake-filesystem
-cockpit-bridge
-cockpit-networkmanager
-cockpit-storaged
-cockpit-system
-cockpit-ws
-cockpit-ws-selinux
 codec2
 codium
 codium-bash-completion
@@ -1618,7 +1612,6 @@ spirv-tools-libs
 sqlite-libs
 sratom
 srt-libs
-sscg
 sssd-client
 sssd-common
 sssd-kcm
