@@ -83,6 +83,9 @@ No wallpapers are included, since they're other people's art. Press `Super + Y` 
 - **Browsers:** LibreWolf as the default, and Brave for web apps with its extras (rewards, wallet, AI, telemetry) turned off.
 - **Notes:** [Iotas](https://flathub.org/apps/org.gnome.World.Iotas), with no network access, so your notes never leave the machine.
 - **Video:** Celluloid with hardware decoding and the full ffmpeg.
+- **Recording:** OBS Studio, set up to record the screen, desktop audio and microphone to `~/Videos` (MP4); choose the screen once when it asks.
+- **Screenshots:** *Screenshot* in the app launcher: drag for an area, click a window, or click the bar for the whole screen, then annotate in Satty (Ctrl+C copies and saves to `~/Pictures/Screenshots`).
+- **Screen sharing** (OBS, video calls in the browser): click the screen to share when asked.
 - **Terminal:** Ghostty with bash and [ble.sh](https://github.com/akinomyoga/ble.sh): gray suggestions from your history (Tab or → accepts), syntax colors, shared history between windows, and `z <folder>` jumps (zoxide).
 - **Laptop:** ThinkPad battery charging stops at 80% to make the battery last longer (does nothing on other laptops).
 

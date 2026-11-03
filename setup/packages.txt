@@ -107,6 +107,7 @@ clevis
 clevis-luks
 clevis-pin-tpm2
 cliphist
+cmake-filesystem
 cockpit-bridge
 cockpit-networkmanager
 cockpit-storaged
@@ -697,6 +698,7 @@ libcue
 libcupsfilters
 libcurl
 libdaemon
+libdatachannel
 libdatrie
 libdav1d
 libdbusmenu
@@ -861,6 +863,7 @@ libpsl
 libpwquality
 libqmi
 libqmi-utils
+libqrcodegencpp
 libqrtr-glib
 libqtxdg
 libquadmath
@@ -1062,6 +1065,7 @@ lpcnetfreedv
 lrzsz
 lsof
 lttng-ust
+luajit
 lua-libs
 luksmeta
 lvm2
@@ -1080,6 +1084,8 @@ man-db
 mangowm
 man-pages
 matugen
+mbedtls
+mbedtls-devel
 mcelog
 mdadm
 mdevctl
@@ -1178,6 +1184,9 @@ nvidia-gpu-firmware
 nvme-cli
 nwg-wrapper
 nxpwireless-firmware
+obs-studio
+obs-studio-libs
+obs-studio-plugin-x264
 ocl-icd
 oniguruma
 openal-soft
@@ -1510,6 +1519,7 @@ realmd
 realtek-firmware
 rit-meera-new-fonts
 rit-rachana-fonts
+rnnoise
 rootfiles
 rpcbind
 rpm
@@ -1537,6 +1547,7 @@ sane-backends
 sane-backends-drivers-cameras
 sane-backends-drivers-scanners
 sane-backends-libs
+satty
 satyr
 sbctl
 scenefx
@@ -1577,6 +1588,7 @@ source-highlight
 soxr
 spandsp
 speex
+speexdsp
 spice-glib
 spice-gtk3
 spice-server
@@ -1682,6 +1694,7 @@ usbmuxd
 usbredir
 usbutils
 userspace-rcu
+usrsctp
 utf8proc
 util-linux
 util-linux-core

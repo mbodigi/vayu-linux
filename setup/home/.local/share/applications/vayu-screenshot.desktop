@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshot
+Comment=Screenshot an area, a window or the whole screen, and annotate it
+Exec=/usr/local/bin/shot edit
+Icon=applets-screenshooter
+Categories=Utility;
+Keywords=screenshot;capture;annotate;satty;snip;

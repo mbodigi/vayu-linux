@@ -1,0 +1,5 @@
+# Screen sharing (OBS, browsers, video calls): no menu app is installed, so pick the screen with slurp:
+# click the screen to share. https://github.com/emersion/xdg-desktop-portal-wlr (man 5 xdg-desktop-portal-wlr)
+[screencast]
+chooser_type=simple
+chooser_cmd=slurp -f %o -or

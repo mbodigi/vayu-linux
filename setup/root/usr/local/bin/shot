@@ -1,6 +1,8 @@
 #!/bin/sh
-# Screenshots: shot [region|full|window]
+# Screenshots: shot [region|full|window|edit]
 # Saves to ~/Pictures/Screenshots, copies to the clipboard, and shows a notification.
+# edit: annotate in Satty (Ctrl+C copies and saves, Ctrl+S saves). Drag for an area, click a window for
+# that window, click the bar or empty desktop for the whole screen.
 set -e
 dir="$HOME/Pictures/Screenshots"
 mkdir -p "$dir"
@@ -12,6 +14,13 @@ case "${1:-region}" in
     window)
         geom=$(mmsg get focusing-client | python3 -I -c 'import json,sys; c=json.load(sys.stdin); print("%d,%d %dx%d" % (c["x"], c["y"], c["width"], c["height"]))')
         grim -g "$geom" "$file" ;;
+    edit)
+        # the visible windows as click targets for slurp (-o adds the screens)
+        area=$(mmsg get all-clients | python3 -I -c 'import json,sys
+for c in json.load(sys.stdin)["clients"]:
+    if c["is_visible"] and not c["is_minimized"]: print("%d,%d %dx%d" % (c["x"], c["y"], c["width"], c["height"]))' | slurp -o) || exit 0
+        grim -g "$area" - | satty --filename - --output-filename "$file" --copy-command wl-copy --save-after-copy --early-exit
+        exit ;;   # Satty saves, copies and notifies itself
     *)
         area=$(slurp) || exit 0   # Esc cancels
         grim -g "$area" "$file" ;;

@@ -25,7 +25,8 @@ home_items=(
     .config/VSCodium/User/settings.json .config/VSCodium/User/keybindings.json .config/VSCodium/User/snippets
     .config/mimeapps.list .config/xdg-terminals.list
     .local/share/applications/brave-browser.desktop
-    .local/share/applications/panel-preferences.desktop
+    .local/share/applications/panel-preferences.desktop .local/share/applications/vayu-screenshot.desktop
+    .config/obs-studio/global.ini .config/obs-studio/user.ini .config/obs-studio/basic/profiles .config/obs-studio/basic/scenes
     .local/share/color-schemes
     .local/share/icons/Fluent-grey/index.theme
     .local/share/icons/Fluent-grey/symbolic/actions/sidebar-show-symbolic.svg .local/share/icons/Fluent-grey/symbolic/actions/list-add-symbolic.svg
@@ -51,6 +52,9 @@ sed -i '/app_id:^brave-.*-Default\$$/{/youtube/!d}' "$S/home/.config/mango/conf.
 
 # leftovers that aren't setup
 find "$S/home" \( -name '*.bak*' -o -name '*.backup*' -o -name '.git' -o -name 'node_modules' \) -prune -exec rm -rf {} +
+# OBS: the screen source's restore token only works on this machine (others pick their screen once)
+python3 -I -c 'import json,sys; p=sys.argv[1]; d=json.load(open(p)); [s["settings"].pop("RestoreToken",None) for s in d["sources"]]; open(p,"w").write(json.dumps(d,indent=4))' "$S/home/.config/obs-studio/basic/scenes/Untitled.json"
+rm -f "$S/home/.config/obs-studio/basic/scenes/"*.bak
 # ble.sh's runtime cache, and the Fedora logo fastfetch no longer uses
 rm -rf "$S/home/.local/share/blesh/cache.d" "$S/home/.local/share/blesh/run" "$S/home/.config/fastfetch/fedora.png"
 
@@ -79,6 +83,7 @@ sys_items=(
     "/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:errornointernet:quickshell.repo"
     /etc/yum.repos.d/brave-browser.repo /etc/yum.repos.d/librewolf.repo
     "/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:scottames:ghostty.repo"
+    /etc/xdg/xdg-desktop-portal-wlr/config
 )
 for p in "${sys_items[@]}"; do
     mkdir -p "$S/root$(dirname "$p")"
