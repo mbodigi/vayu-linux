@@ -15,3 +15,4 @@ singleton Weather 1.0 Weather.qml
 singleton Settings 1.0 Settings.qml
 singleton BatteryAlerts 1.0 BatteryAlerts.qml
 singleton Portal 1.0 Portal.qml
+singleton Session 1.0 Session.qml

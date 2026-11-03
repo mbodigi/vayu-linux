@@ -26,6 +26,7 @@ list and configs now come from this system, and every package in the list is ava
 - Ghostty 1.4 and ble.sh suggestions in bash
 - New kernels now boot by default, and systemd-boot is only switched on after its boot entries pass a check
 - Stable repos only: RPM Fusion's testing repos stay off
+- Save session in the power menu: the next login offers to reopen your apps, only if you saved and click Restore
 
 ## How Vayu Linux relates to Fedora
 

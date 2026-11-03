@@ -16,7 +16,7 @@ import "services"
 
 ShellRoot {
     // singletons load lazily; start the ones that must run from login
-    Component.onCompleted: [Idle.coffee, Clipboard.entries, BatteryAlerts.pct, Portal.state]
+    Component.onCompleted: [Idle.coffee, Clipboard.entries, BatteryAlerts.pct, Portal.state, Session.saved]
 
     Background {}
 

@@ -1,4 +1,4 @@
-// Power menu: Lock, Sleep, Log out, Restart, Shut down. Left/Right + Enter, or click.
+// Power menu: Lock, Sleep, Save session, Log out, Restart, Shut down. Left/Right + Enter, or click.
 // Log out / Restart / Shut down ask for a second press to confirm. Toggle with: qs -c shell ipc call power toggle
 import QtQuick
 import Quickshell
@@ -24,6 +24,7 @@ PanelWindow {
     readonly property var actions: [
         { icon: "lock", label: "Lock", confirm: false, run: () => LockState.lock() },
         { icon: "bedtime", label: "Sleep", confirm: false, run: () => Quickshell.execDetached(["systemctl", "suspend"]) },
+        { icon: "save", label: "Save session", confirm: false, run: () => Session.save() },
         { icon: "logout", label: "Log out", confirm: true, run: () => Quickshell.execDetached(["mmsg", "dispatch", "quit"]) },
         { icon: "restart_alt", label: "Restart", confirm: true, run: () => Quickshell.execDetached(["systemctl", "reboot"]) },
         { icon: "power_settings_new", label: "Shut down", confirm: true, run: () => Quickshell.execDetached(["systemctl", "poweroff"]) }
