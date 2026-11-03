@@ -136,7 +136,7 @@ if sdboot_ok; then
     done
     if why=$(sdboot_entries_ok /boot/efi /usr/lib/modules); then
         bootctl install --esp-path=/boot/efi
-        printf 'timeout 1\ndefault @saved\n' > /boot/efi/loader/loader.conf
+        printf 'timeout 1\n' > /boot/efi/loader/loader.conf   # no default: the newest kernel boots, not the last one booted
         echo "systemd-boot installed with $(ls /boot/efi/loader/entries/*.conf | wc -l) kernel entries (GRUB kept as a fallback boot entry)"
     else
         echo "systemd-boot check failed ($why): undoing it, GRUB stays the bootloader"
