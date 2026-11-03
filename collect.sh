@@ -113,8 +113,16 @@ cp -a "$H"/.local/share/wallpapers/. "$P/home/.local/share/wallpapers/"
 cp /var/cache/shell-greeter/wallpaper "$P/greeter-cache/"
 
 # ---------- packages ----------
-# ...minus what only this machine uses: markitdown and its dependencies (they need a local launcher to work)
-rpm -qa --qf '%{NAME}\n' | grep -vE '^(gpg-pubkey|libreoffice|python3-markitdown$|python3-magika$|python3-onnxruntime$|onnx-libs$|cpuinfo$|python3-flatbuffers$|python3-markdownify$|python3-click$|python3-protobuf$)' | sort -u > "$S/packages.txt"
+# ...minus what only this machine uses:
+#   markitdown and its dependencies (they need a local launcher to work), VM host and guest tools, compilers and
+#   docs, AWS libraries, installer leftovers (Stratis, kexec), company logins (sssd), the crash reporter, USB writer
+machine_only='^(gpg-pubkey|libreoffice|python3-markitdown$|python3-magika$|python3-onnxruntime$|onnx-libs$|cpuinfo$|python3-flatbuffers$|python3-markdownify$|python3-click$|python3-protobuf$'
+machine_only+='|qemu|libvirt|python3-libvirt|virt-|edk2|swtpm|seabios|ipxe|sgabios|spice-|virtualbox-guest|open-vm-tools|hyperv-'
+machine_only+='|golang|gcc|cpp$|annobin|pandoc|nodejs24-docs$|glibc-devel$|kernel-headers$|libxcrypt-devel$'
+machine_only+='|python3-boto3$|python3-botocore$|python3-s3transfer$|python3-jmespath$'
+machine_only+='|stratis|python3-dbus-client-gen$|python3-dbus-python-client-gen$|python3-dbus-signature-pyparsing$|python3-into-dbus-python$|python3-justbases$|python3-justbytes$|kexec-tools$'
+machine_only+='|sssd|abrt|python3-abrt|libreport|python3-libreport|satyr|python3-satyr|mediawriter$)'
+rpm -qa --qf '%{NAME}\n' | grep -vE "$machine_only" | sort -u > "$S/packages.txt"
 # every name must be installable from the repos the installer uses
 avail=$(mktemp)
 dnf repoquery -q --setopt='disable_excludes=*' --available --qf '%{name}\n' $(cat "$S/packages.txt") 2>/dev/null | sort -u > "$avail"

@@ -42,7 +42,8 @@ install -Dm644 "$R"/setup/root/etc/dnf/repos.override.d/90-vayu.repo /etc/dnf/re
 
 # the full ffmpeg from RPM Fusion instead of Fedora's ffmpeg-free (the one swap this does)
 if rpm -q ffmpeg-free >/dev/null; then dnf -y swap ffmpeg-free ffmpeg --allowerasing; fi
-dnf -y install --skip-unavailable $pkgs
+# Terra has the window manager: if it can't load, stop instead of silently installing a desktop without one
+dnf --setopt=terra.skip_if_unavailable=0 -y install --skip-unavailable $pkgs
 # Notes app: Iotas from Flathub. No network (no Nextcloud sync, notes stay on the machine), no keyring,
 # read-only access to the GTK 4 theme so it follows the matugen colors.
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
