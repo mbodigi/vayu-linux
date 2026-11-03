@@ -5,7 +5,7 @@
 - [ ] `./collect.sh`, then `git diff`: look over what changed
 - [ ] Nothing personal in the diff: no username, passwords, tokens, keys, NextDNS ID, wallpapers
 
-## 2. Install test (on a fresh Fedora 44 VM, not this machine)
+## 2. Install test (on a fresh Fedora 45 VM, not this machine)
 
 - [ ] Push to a branch, then in the VM: `curl -fsSL https://raw.githubusercontent.com/mbodigi/vayu-linux/<branch>/get.sh | REF=<branch> bash`
 - [ ] It finishes without errors and doesn't remove packages (Fedora's GRUB and grubby stay)

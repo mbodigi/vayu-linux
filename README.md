@@ -11,7 +11,7 @@ Vayu (वायु) is the Sanskrit name of the wind.
 
 ![The desktop: bar, dock, app launcher, dashboard, control center, shortcut cheatsheet and fastfetch](docs/demo.gif)
 
-<sub>Shown with Fedora 44's default wallpaper (CC BY-SA 4.0, Fedora Design Team). The theme colors are generated from whatever wallpaper you pick.</sub>
+<sub>Shown with Fedora 45's default wallpaper (CC BY-SA 4.0, Fedora Design Team). The theme colors are generated from whatever wallpaper you pick.</sub>
 
 ## News
 
@@ -179,6 +179,6 @@ that looks like a key or password.
   [matugen](https://github.com/InioX/matugen),
   [greetd](https://kl.wtf/projects/greetd)
 - [Material Symbols](https://fonts.google.com/icons) font (Apache License 2.0), bundled for the shell's icons
-- Demo GIF wallpaper: Fedora 44 default background by the Fedora Design Team, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- Demo GIF wallpaper: Fedora 45 default background by the Fedora Design Team, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 - Built on [Fedora](https://fedoraproject.org) 45. Vayu Linux is not a Fedora Project release.
 - Boot splash animation: [Plymouth](https://gitlab.freedesktop.org/plymouth/plymouth)'s spinner theme (GPL-2.0), copied from Fedora's package at install time
