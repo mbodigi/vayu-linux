@@ -1,6 +1,6 @@
 #!/bin/bash
 # Snapshot this machine's desktop setup (no personal data) into the repo:
-#   setup/root/          system files (greeter, greetd, browser policies, LibreWolf defaults, battery rule, tuned, repos, helper scripts)
+#   setup/root/          system files (greeter, greetd, browser policies, Zen defaults, battery rule, tuned, repos, helper scripts)
 #   setup/home/          user configs, with the home path written as @HOME@
 #   setup/greeter-cache/ the login screen's colors
 #   setup/packages.txt   every installed package name (checked to be installable from the repos)
@@ -83,7 +83,7 @@ sys_items=(
     /usr/share/plymouth/themes/vayu/vayu.plymouth /usr/share/plymouth/themes/vayu/watermark.png
     /etc/dnf/dnf.conf /etc/dnf/repos.override.d/90-vayu.repo
     "/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:errornointernet:quickshell.repo"
-    /etc/yum.repos.d/brave-browser.repo /etc/yum.repos.d/librewolf.repo
+    /etc/yum.repos.d/brave-browser.repo /etc/zen/policies/policies.json
     "/etc/yum.repos.d/_copr:copr.fedorainfracloud.org:scottames:ghostty.repo"
     /etc/xdg/xdg-desktop-portal-wlr/config
 )
@@ -101,10 +101,11 @@ install -Dm644 src/system/shell-greeter.sysusers "$S/root/usr/lib/sysusers.d/she
 install -Dm644 src/system/shell-greeter.tmpfiles "$S/root/usr/lib/tmpfiles.d/shell-greeter.conf"
 install -Dm644 src/system/vayu-greeter.cil "$S/root/usr/share/selinux/packages/vayu-greeter.cil"
 
-# LibreWolf tweaks: profile user.js -> defaults for every new profile
-lw=$(ls -d "$H"/.config/librewolf/librewolf/*.default-release | head -1)
-mkdir -p "$S/root/usr/share/librewolf/defaults/pref"
-sed 's/^user_pref(/pref(/' "$lw/user.js" > "$S/root/usr/share/librewolf/defaults/pref/zz-shell.js"
+# Zen tweaks: profile user.js -> defaults for every new profile
+# shortcut: as defaults, strict tracking protection and unloadOnLowMemory don't take effect on new profiles; set them per profile if that starts to matter
+zen=$(ls -d "$H"/.zen/*.Default\ \(release\) | head -1)
+mkdir -p "$S/root/usr/lib64/zen/browser/defaults/preferences"
+sed 's/^user_pref(/pref(/' "$zen/user.js" > "$S/root/usr/lib64/zen/browser/defaults/preferences/zz-vayu.js"
 
 # login screen theme colors (the wallpaper copy goes to private/)
 cp /var/cache/shell-greeter/colors.json "$S/greeter-cache/"

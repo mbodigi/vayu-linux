@@ -1,6 +1,6 @@
 pragma Singleton
 // Captive portal (hotel/airport Wi-Fi login): NetworkManager's connectivity check reports "portal",
-// we open the login page in Brave on tag 5 straight away (LibreWolf's HTTPS-only mode can
+// we open the login page in Brave on tag 5 straight away (Zen's HTTPS-only mode can
 // block the plain http page the portal needs) and show a notification that can reopen it.
 import QtQuick
 import Quickshell

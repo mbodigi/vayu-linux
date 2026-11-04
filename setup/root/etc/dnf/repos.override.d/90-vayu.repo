@@ -18,9 +18,6 @@ skip_if_unavailable=1
 [brave-browser]
 skip_if_unavailable=1
 
-[librewolf]
-skip_if_unavailable=1
-
 # RPM Fusion's early Fedora release packages turn on their testing repos: stable only
 [rpmfusion-free-updates]
 enabled=1

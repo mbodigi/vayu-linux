@@ -13,7 +13,7 @@
   "scheme": "scheme-monochrome",
   "barStyle": "mac",
   "dockPins": [
-    "librewolf",
+    "app.zen_browser.zen",
     "brave-browser",
     "thunar",
     "com.mitchellh.ghostty"

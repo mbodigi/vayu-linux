@@ -65,7 +65,7 @@ systemd-sysusers shell-greeter.conf
 systemd-tmpfiles --create shell-greeter.conf
 semanage fcontext -a -t cache_home_t '/var/cache/shell-greeter(/.*)?' 2>/dev/null || true
 semodule -i /usr/share/selinux/packages/vayu-greeter.cil || echo "SELinux module not loaded: the boot log will show a few denials"
-restorecon -RF /etc /usr/local /usr/share/shell-setup /usr/share/librewolf /var/lib/greeter 2>/dev/null || true
+restorecon -RF /etc /usr/local /usr/share/shell-setup /usr/lib64/zen /var/lib/greeter 2>/dev/null || true
 
 # Vayu Linux branding. ID stays "fedora" in os-release, so dnf, repos and updates are Fedora's as before.
 # Name: vayu-os-release writes /etc/os-release from Fedora's /usr/lib/os-release (and again at every boot,

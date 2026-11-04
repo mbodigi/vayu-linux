@@ -20,6 +20,7 @@ Fedora 44: the Fedora 45 kernel, our login screen and desktop, `scx_lavd` and th
 list and configs now come from this system, and every package in the list is available on Fedora 45.
 
 **Also new:**
+- Zen replaces LibreWolf as the default browser
 - A [net-install ISO](https://github.com/mbodigi/vayu-linux/releases/latest): boot it from a USB stick instead of installing Fedora first
 - OBS Studio, set up to record the screen, desktop audio and microphone
 - A Screenshot app with annotation (Satty)
@@ -42,7 +43,7 @@ and the installer script turns it into Vayu Linux. What that layer changes:
 | **Boot** | A Plymouth boot splash with the Vayu logo (`setup/root/usr/share/plymouth/themes/vayu`), Fedora's spinner animation below it; boot menu entries are named Vayu Linux. systemd-boot where it's safe (see Install). |
 | **Logo** | [`vayu.svg`](setup/home/.config/fastfetch/vayu.svg), shown by fastfetch and used for the OS icon (`vayu-logo-icon`) |
 | **System** | Power profiles that follow the charger, the `scx_lavd` scheduler, zstd-compressed zram swap |
-| **Packages** | Extra repos (RPM Fusion, terra, Quickshell and Ghostty COPRs, Brave, LibreWolf) and the package list in `setup/packages.txt` |
+| **Packages** | Extra repos (RPM Fusion, terra, Quickshell and Ghostty COPRs, Brave) and the package list in `setup/packages.txt` |
 
 Everything else (kernel, system libraries, security updates, release upgrades) comes straight from Fedora.
 Vayu Linux is an independent project and is not affiliated with or endorsed by the Fedora Project.
@@ -87,7 +88,7 @@ That's it.
 
 ### What the installer does
 
-1. **Repos:** adds RPM Fusion, terra, the Quickshell and Ghostty COPRs, Brave and LibreWolf.
+1. **Repos:** adds RPM Fusion, terra, the Quickshell and Ghostty COPRs and Brave.
 2. **Packages:** installs the package list ([`setup/packages.txt`](setup/packages.txt)) and swaps Fedora's limited ffmpeg for the full one. Kernels stay Fedora's own.
 3. **Notes app:** installs Iotas from Flathub, without network access.
 4. **System files:** copies the login screen, power profiles, browser policies and helper scripts from [`setup/root`](setup/root), and loads a small [SELinux module](src/system/vayu-greeter.cil) for the login screen.
@@ -108,7 +109,7 @@ No wallpapers are included, since they're other people's art. Press `Super + Y` 
 - **Login screen:** our own, matching the desktop.
 - **Theme:** colors made from your wallpaper, used everywhere (shell, GTK and Qt apps, window borders), with soft grey accents.
 - **Font:** JetBrains Mono everywhere.
-- **Browsers:** LibreWolf as the default, and Brave for web apps with its extras (rewards, wallet, AI, telemetry) turned off.
+- **Browsers:** [Zen](https://zen-browser.app) as the default, with [BetterZen](https://github.com/yokoffing/Betterfox/tree/main/zen) privacy settings and uBlock Origin, and Brave for web apps with its extras (rewards, wallet, AI, telemetry) turned off.
 - **Notes:** [Iotas](https://flathub.org/apps/org.gnome.World.Iotas), with no network access, so your notes never leave the machine.
 - **Video:** Celluloid with hardware decoding and the full ffmpeg.
 - **Recording:** OBS Studio, set up to record the screen, desktop audio and microphone to `~/Videos` (MP4); choose the screen once when it asks.
@@ -192,6 +193,7 @@ that looks like a key or password.
 - [MangoWM](https://github.com/mangowm/mango), [Quickshell](https://quickshell.org),
   [matugen](https://github.com/InioX/matugen),
   [greetd](https://kl.wtf/projects/greetd)
+- [Betterfox](https://github.com/yokoffing/Betterfox) (MIT): the BetterZen settings for Zen
 - [Material Symbols](https://fonts.google.com/icons) font (Apache License 2.0), bundled for the shell's icons
 - Demo GIF wallpaper: Fedora 45 default background by the Fedora Design Team, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 - Built on [Fedora](https://fedoraproject.org) 45. Vayu Linux is not a Fedora Project release.

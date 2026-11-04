@@ -844,7 +844,6 @@ libraw1394
 librbd1
 librdmacm
 librepo
-librewolf
 librist
 librsvg2
 libsamplerate
@@ -1620,6 +1619,7 @@ yt-dlp
 yt-dlp+default
 yyjson
 zchunk-libs
+zen-browser
 zenity
 zeromq
 zimg

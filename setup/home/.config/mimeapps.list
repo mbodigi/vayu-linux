@@ -1,9 +1,9 @@
 [Added Associations]
 application/json=com.visualstudio.CodeOSS.desktop;
-application/xhtml+xml=librewolf.desktop;
-text/html=librewolf.desktop;
-x-scheme-handler/http=librewolf.desktop;
-x-scheme-handler/https=librewolf.desktop;
+application/xhtml+xml=app.zen_browser.zen.desktop;
+text/html=app.zen_browser.zen.desktop;
+x-scheme-handler/http=app.zen_browser.zen.desktop;
+x-scheme-handler/https=app.zen_browser.zen.desktop;
 inode/directory=thunar.desktop;
 x-scheme-handler/file=thunar.desktop;
 x-scheme-handler/sftp=thunar.desktop;
@@ -16,10 +16,10 @@ text/x-python=com.visualstudio.CodeOSS.desktop;
 text/x-shellscript=com.visualstudio.CodeOSS.desktop;
 
 [Default Applications]
-application/xhtml+xml=librewolf.desktop
-text/html=librewolf.desktop
-x-scheme-handler/http=librewolf.desktop
-x-scheme-handler/https=librewolf.desktop
+application/xhtml+xml=app.zen_browser.zen.desktop
+text/html=app.zen_browser.zen.desktop
+x-scheme-handler/http=app.zen_browser.zen.desktop
+x-scheme-handler/https=app.zen_browser.zen.desktop
 inode/directory=thunar.desktop
 x-scheme-handler/file=thunar.desktop
 x-scheme-handler/sftp=thunar.desktop
@@ -32,3 +32,5 @@ text/x-csrc=com.visualstudio.CodeOSS.desktop
 text/x-python=com.visualstudio.CodeOSS.desktop
 text/x-shellscript=com.visualstudio.CodeOSS.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+x-scheme-handler/about=app.zen_browser.zen.desktop
+x-scheme-handler/unknown=app.zen_browser.zen.desktop
