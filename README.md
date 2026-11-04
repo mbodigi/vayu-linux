@@ -20,6 +20,7 @@ Fedora 44: the Fedora 45 kernel, our login screen and desktop, `scx_lavd` and th
 list and configs now come from this system, and every package in the list is available on Fedora 45.
 
 **Also new:**
+- A [net-install ISO](https://github.com/mbodigi/vayu-linux/releases/latest): boot it from a USB stick instead of installing Fedora first
 - OBS Studio, set up to record the screen, desktop audio and microphone
 - A Screenshot app with annotation (Satty)
 - Screen sharing fixed for every app (it used to fail with "no output found")
@@ -31,8 +32,8 @@ list and configs now come from this system, and every package in the list is ava
 ## How Vayu Linux relates to Fedora
 
 Vayu Linux is a **Fedora derivative**: not a fork that rebuilds Fedora's packages, but a layer on top of a
-regular Fedora install. You install Fedora Everything with no desktop, then the installer turns it into
-Vayu Linux. What that layer changes:
+regular Fedora install. Our ISO installs it all in one go, or you install Fedora Everything with no desktop
+and the installer script turns it into Vayu Linux. What that layer changes:
 
 | Area | What Vayu Linux does |
 |---|---|
@@ -48,6 +49,18 @@ Vayu Linux is an independent project and is not affiliated with or endorsed by t
 
 ## Install
 
+There are two ways to install Vayu Linux.
+
+### From the ISO
+
+1. Download the [net-install ISO](https://github.com/mbodigi/vayu-linux/releases/latest) (1.28 GB) and check it with its `.sha256` file.
+2. Write it to a USB stick and boot from it.
+3. Follow the installer, then reboot.
+
+It needs internet during the install, since packages download as it runs. The disk you choose can be erased, so back up first.
+
+### On a minimal Fedora install
+
 1. Install Fedora from the [Everything ISO](https://fedoraproject.org/misc/#everything), choosing **Minimal Install**.
 2. Run:
    ```bash
@@ -57,10 +70,8 @@ Vayu Linux is an independent project and is not affiliated with or endorsed by t
 
 That's it.
 
-**Or use the ISO:** download the [net-install ISO](https://github.com/mbodigi/vayu-linux/releases/latest), write it to a USB stick, boot from it and follow the installer. It needs internet during the install, since packages download as it runs.
-
 <details>
-<summary>Details</summary>
+<summary>Details for the one-line installer</summary>
 
 - It asks for your **password once** (sudo) and downloads about **2.5 GB** of packages, plus the Iotas notes app and its GNOME runtime from Flathub.
 - Fedora Workstation, KDE and other editions or spins (anything with a desktop already) aren't
