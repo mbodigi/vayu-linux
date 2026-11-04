@@ -99,6 +99,7 @@ chmod 755 "$S/root/usr/local/bin/"*
 # the login screen's account: created by sysusers.d/tmpfiles.d (no Fedora package provides it)
 install -Dm644 src/system/shell-greeter.sysusers "$S/root/usr/lib/sysusers.d/shell-greeter.conf"
 install -Dm644 src/system/shell-greeter.tmpfiles "$S/root/usr/lib/tmpfiles.d/shell-greeter.conf"
+install -Dm644 src/system/vayu-greeter.cil "$S/root/usr/share/selinux/packages/vayu-greeter.cil"
 
 # LibreWolf tweaks: profile user.js -> defaults for every new profile
 lw=$(ls -d "$H"/.config/librewolf/librewolf/*.default-release | head -1)

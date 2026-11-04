@@ -79,7 +79,7 @@ That's it.
 1. **Repos:** adds RPM Fusion, terra, the Quickshell and Ghostty COPRs, Brave and LibreWolf.
 2. **Packages:** installs the package list ([`setup/packages.txt`](setup/packages.txt)) and swaps Fedora's limited ffmpeg for the full one. Kernels stay Fedora's own.
 3. **Notes app:** installs Iotas from Flathub, without network access.
-4. **System files:** copies the login screen, power profiles, browser policies and helper scripts from [`setup/root`](setup/root).
+4. **System files:** copies the login screen, power profiles, browser policies and helper scripts from [`setup/root`](setup/root), and loads a small [SELinux module](src/system/vayu-greeter.cil) for the login screen.
 5. **Branding:** sets the Vayu Linux name, logo and boot splash.
 6. **Services:** turns on the login screen, the CPU scheduler and daily firmware update checks, and stops the boot from waiting for the network.
 7. **dnf:** sets 15 parallel downloads, no optional extras, no "countme" ping, and skips extra repos that are down.

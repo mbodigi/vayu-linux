@@ -1,0 +1,7 @@
+; Denials on Fedora 45 that fill the boot log; nothing fails without them.
+; login screen (greetd/Mango/Quickshell run as xdm_t): saving its small files in /var/lib/greeter
+(allow xdm_t user_home_t (file (write link)))
+; login screen: mango-session.target and graphical-session.target in its user manager
+(allow xdm_t systemd_unit_file_t (service (start stop status)))
+; systemd at early boot, checking the kernel's uevent socket
+(allow init_t kernel_t (netlink_kobject_uevent_socket (getattr)))
