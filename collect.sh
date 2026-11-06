@@ -62,6 +62,8 @@ rm -rf "$S/home/.local/share/blesh/cache.d" "$S/home/.local/share/blesh/run" "$S
 grep -rlI "$H/.local/bin/" "$S/home" | xargs -r sed -i "s#$H/.local/bin/#/usr/local/bin/#g"
 # qBittorrent at login is this machine's habit, not something to start for everyone
 sed -i '/^# qBittorrent on tag 9/,/^exec_once=.*qbittorrent/d' "$S/home/.config/mango/config.conf"
+# nothing Claude-related ships: drop its link handler from the default apps
+sed -i '/claude/Id' "$S/home/.config/mimeapps.list"
 grep -q shell-firstlogin "$S/home/.config/mango/config.conf" ||
     printf '\n# first login of a new user: dconf settings (fonts, theme, Celluloid)\nexec_once=/usr/local/bin/shell-firstlogin\n' >> "$S/home/.config/mango/config.conf"
 grep -rlI "$H" "$S/home" | xargs -r sed -i "s#$H#@HOME@#g"
@@ -123,7 +125,7 @@ machine_only+='|qemu|libvirt|python3-libvirt|virt-|edk2|swtpm|seabios|ipxe|sgabi
 machine_only+='|golang|gcc|cpp$|annobin|pandoc|nodejs24-docs$|glibc-devel$|kernel-headers$|libxcrypt-devel$'
 machine_only+='|python3-boto3$|python3-botocore$|python3-s3transfer$|python3-jmespath$'
 machine_only+='|stratis|python3-dbus-client-gen$|python3-dbus-python-client-gen$|python3-dbus-signature-pyparsing$|python3-into-dbus-python$|python3-justbases$|python3-justbytes$|kexec-tools$'
-machine_only+='|sssd|abrt|python3-abrt|libreport|python3-libreport|satyr|python3-satyr|mediawriter$)'
+machine_only+='|sssd|abrt|python3-abrt|libreport|python3-libreport|satyr|python3-satyr|mediawriter$|clang-tools-extra$)'
 rpm -qa --qf '%{NAME}\n' | grep -vE "$machine_only" | sort -u > "$S/packages.txt"
 # every name must be installable from the repos the installer uses
 avail=$(mktemp)
