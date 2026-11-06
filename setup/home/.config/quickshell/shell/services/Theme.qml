@@ -43,8 +43,19 @@ Singleton {
                 const colors = JSON.parse(colorsFile.text()).colors;
                 root.pal = colors.dark ?? colors;
             } catch (e) {
-                console.warn("Theme: could not parse palette:", e);
+                // matugen may still be writing the file: read it again shortly
+                if (retry.tries < 10) { retry.tries++; retry.restart(); }
+                else console.warn("Theme: could not parse palette:", e);
+                return;
             }
+            retry.tries = 0;
         }
+    }
+
+    Timer {
+        id: retry
+        property int tries: 0
+        interval: 150
+        onTriggered: colorsFile.reload()
     }
 }

@@ -134,6 +134,21 @@ PanelWindow {
             }
             RowLayout {
                 Layout.fillWidth: true
+                Label { Layout.fillWidth: true; text: "Background" }
+                Repeater {
+                    model: [{ id: "blur", label: "Blur" }, { id: "solid", label: "Solid" }]
+                    Chip {
+                        id: bg
+                        required property var modelData
+                        readonly property bool on: Settings.get("barBackground") === modelData.id
+                        highlighted: on
+                        onClicked: Settings.set("barBackground", modelData.id)
+                        Label { text: bg.modelData.label; color: bg.on ? Theme.textOnPrimary : Theme.text }
+                    }
+                }
+            }
+            RowLayout {
+                Layout.fillWidth: true
                 Label { Layout.fillWidth: true; text: "Style" }
                 Repeater {
                     model: [{ id: "mac", label: "Flat (mac)" }, { id: "pills", label: "Pills" }]

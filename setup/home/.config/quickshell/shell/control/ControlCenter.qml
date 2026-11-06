@@ -89,6 +89,21 @@ PanelWindow {
             anchors { left: parent.left; right: parent.right; top: parent.top; margins: 14 }
             spacing: 10
 
+            // header: gear opens the full Settings panel (same as Super+,)
+            RowLayout {
+                Layout.fillWidth: true
+                Label { Layout.fillWidth: true; text: "Quick settings"; color: Theme.textMuted; font.pixelSize: 12 }
+                Chip {
+                    implicitHeight: 30
+                    onClicked: {
+                        Panels.control = false;
+                        Quickshell.execDetached(["qs", "-c", "shell", "ipc", "call", "settings", "toggle"]);
+                    }
+                    Icon { name: "settings"; color: Theme.text }
+                    Label { text: "Settings"; color: Theme.text }
+                }
+            }
+
             // sliders
             // volume: click the speaker for the output/input drop-down, right-click it to mute
             Slider {

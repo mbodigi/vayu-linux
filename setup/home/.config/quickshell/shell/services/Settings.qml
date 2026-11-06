@@ -15,6 +15,7 @@ Singleton {
         scheme: "scheme-monochrome",
         barStyle: "pills",  // pills | mac
         barPosition: "top", // top | bottom; panels that open from the bar follow it
+        barBackground: "blur", // blur (see-through, Mango blurs behind it) | solid
         dockPins: []        // desktop entry ids pinned to the dock, in order
     })
     property var values: defaults

@@ -15,7 +15,8 @@ PanelWindow {
     readonly property bool mac: Settings.get("barStyle") === "mac"
 
     implicitHeight: mac ? 28 : 36
-    color: mac ? Qt.rgba(Theme.surface.r, Theme.surface.g, Theme.surface.b, 0.7) : Theme.surface
+    // see-through only with the blur background; Mango's blur_layer softens what shows through
+    color: Settings.get("barBackground") === "solid" ? Theme.surface : Qt.rgba(Theme.surface.r, Theme.surface.g, Theme.surface.b, mac ? 0.7 : 0.85)
 
     // faint gray line along the screen-facing edge of the flat bar
     Rectangle {

@@ -40,8 +40,8 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: 12
-        // hover = the gray of the bar's active workspace pill
-        color: mouse.containsMouse || root.menuOpen ? Theme.grayAccent : "transparent"
+        // hover = the colour style's highlight, like an active tile
+        color: mouse.containsMouse || root.menuOpen ? Theme.primary : "transparent"
     }
 
     // running indicator on the dock's outer edge
@@ -51,7 +51,7 @@ Item {
         width: 3
         height: root.focused ? 22 : 8
         radius: 2
-        color: root.focused ? Theme.accentLine : Qt.rgba(1, 1, 1, 0.45)
+        color: root.focused ? Theme.accentLine : Qt.rgba(Theme.outline.r, Theme.outline.g, Theme.outline.b, 0.6)
         Behavior on height { NumberAnimation { duration: 120 } }
     }
 
@@ -117,7 +117,7 @@ Item {
             radius: 12
             color: Theme.surfaceContainer
             border.width: 1
-            border.color: Qt.rgba(1, 1, 1, 0.08)
+            border.color: Qt.rgba(Theme.outline.r, Theme.outline.g, Theme.outline.b, 0.25)
 
             Column {
                 id: menuColumn
