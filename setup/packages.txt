@@ -358,7 +358,6 @@ glx-utils
 glycin-libs
 glycin-loaders
 gmp
-gnome-abrt
 gnome-disk-utility
 gnulib-l10n
 gnupg2
