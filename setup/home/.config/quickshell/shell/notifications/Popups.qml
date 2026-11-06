@@ -9,7 +9,9 @@ PanelWindow {
 
     visible: Notifs.popups.length > 0 && !Notifs.centerOpen
     color: "transparent"
-    readonly property bool atBottom: Settings.get("barPosition") === "bottom"
+    // the bar position; shell.qml recreates this window when it changes (a layer surface can't switch edges)
+    required property var modelData
+    readonly property bool atBottom: modelData === "bottom"
     anchors { top: !atBottom; bottom: atBottom; right: true }
     margins { top: 6; bottom: 6; right: 8 }
     exclusionMode: ExclusionMode.Normal

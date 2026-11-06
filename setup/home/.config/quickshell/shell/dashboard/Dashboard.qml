@@ -49,10 +49,8 @@ PanelWindow {
     Rectangle {
         id: panel
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: Settings.get("barPosition") === "bottom" ? undefined : parent.top
-        anchors.bottom: Settings.get("barPosition") === "bottom" ? parent.bottom : undefined
-        anchors.topMargin: 6
-        anchors.bottomMargin: 6
+        // next to the bar: a computed y, not top/bottom anchors that flip (they can stick to both edges when the bar moves)
+        y: Settings.get("barPosition") === "bottom" ? parent.height - height - 6 : 6
         width: 1000
         height: 640
         radius: 24

@@ -31,7 +31,10 @@ ShellRoot {
     AppGrid {}
     ClipboardPanel {}
     PowerMenu {}
-    Popups {}
+    Variants {
+        model: [Settings.get("barPosition")]
+        Popups {}
+    }
     Center {}
     Osd {}
     ControlCenter {}

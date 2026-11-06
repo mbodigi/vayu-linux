@@ -95,7 +95,7 @@ for p in "${sys_items[@]}"; do
 done
 find "$S/root" \( -name '*.bak*' -o -name '*.backup*' \) -delete
 mkdir -p "$S/root/usr/local/bin"
-cp -a "$H"/.local/bin/{shot,mango-cycle} src/shell-user-setup src/shell-firstlogin "$S/root/usr/local/bin/"
+cp -a "$H"/.local/bin/{shot,mango-cycle,desktop-reload} src/shell-user-setup src/shell-firstlogin "$S/root/usr/local/bin/"
 chmod 755 "$S/root/usr/local/bin/"*
 
 # the login screen's account: created by sysusers.d/tmpfiles.d (no Fedora package provides it)

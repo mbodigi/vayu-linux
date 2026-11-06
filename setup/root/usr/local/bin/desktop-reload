@@ -1,0 +1,7 @@
+#!/bin/sh
+# Super+R: reload Mango's config, then restart our Quickshell shell (bar, panels, dock).
+# Mango spawns this, so the shell gets a clean env.
+mmsg dispatch reload_config >/dev/null
+pkill -u "$(id -u)" -f '^qs -c shell$'
+sleep 0.5
+exec qs -c shell
