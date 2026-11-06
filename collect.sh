@@ -22,7 +22,7 @@ home_items=(
     .config/fontconfig .config/fastfetch .config/mpv .config/environment.d
     .config/Thunar .config/xfce4
     .config/micro/bindings.json .config/micro/settings.json
-    .config/VSCodium/User/settings.json .config/VSCodium/User/keybindings.json .config/VSCodium/User/snippets
+    .config/katerc
     .config/mimeapps.list .config/xdg-terminals.list
     .local/share/applications/brave-browser.desktop
     .local/share/applications/panel-preferences.desktop .local/share/applications/vayu-screenshot.desktop

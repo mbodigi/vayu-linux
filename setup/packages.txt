@@ -95,8 +95,6 @@ clevis-pin-tpm2
 cliphist
 cmake-filesystem
 codec2
-codium
-codium-bash-completion
 colord
 colord-libs
 color-filesystem
@@ -551,6 +549,7 @@ jq
 json-c
 json-glib
 jxrlib
+kate
 kbd
 kbd-legacy
 kbd-misc
