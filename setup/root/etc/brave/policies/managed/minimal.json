@@ -17,5 +17,6 @@
   "PromotionalTabsEnabled": false,
   "ShoppingListEnabled": false,
   "HighEfficiencyModeEnabled": true,
-  "DefaultBrowserSettingEnabled": false
+  "DefaultBrowserSettingEnabled": false,
+  "MemorySaverModeSavings": 2
 }
