@@ -14,6 +14,24 @@ Singleton {
 
     function regenerate() { set(root.path); }
 
+    // the current file is gone or unreadable: switch to the first saved wallpaper that isn't it
+    function useFallback() {
+        if (fallback.running) return;
+        fallback.running = true;
+    }
+    Process {
+        id: fallback
+        command: ["find", Quickshell.env("HOME") + "/.local/share/wallpapers", "-maxdepth", "2", "-type", "f",
+                  "(", "-iname", "*.jpg", "-o", "-iname", "*.jpeg", "-o", "-iname", "*.png", "-o", "-iname", "*.webp", ")"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const next = text.split("\n").filter(l => l && l !== root.path).sort()[0];
+                if (next) root.set(next);
+                else console.warn("Wallpaper: no saved wallpapers to fall back to");
+            }
+        }
+    }
+
     function set(newPath) {
         if (!newPath) return;
         root.path = newPath;

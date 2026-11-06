@@ -28,6 +28,7 @@ Variants {
             sourceSize.width: win.modelData.width
             sourceSize.height: win.modelData.height
             opacity: status === Image.Ready ? 1 : 0
+            onStatusChanged: if (status === Image.Error) Wallpaper.useFallback()
             Behavior on opacity { NumberAnimation { duration: 300 } }
         }
     }
