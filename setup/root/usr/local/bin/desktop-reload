@@ -4,4 +4,4 @@
 mmsg dispatch reload_config >/dev/null
 pkill -u "$(id -u)" -f '^qs -c shell$'
 sleep 0.5
-exec qs -c shell
+exec env QSG_RHI_BACKEND=vulkan qs -c shell
