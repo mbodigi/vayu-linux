@@ -1,6 +1,7 @@
 // Wallpapers tab.
 //  Mine:      images in ~/.local/share/wallpapers (and subfolders). Click to set.
-//  Wallhaven: search wallhaven.cc (SFW only). Click to download into ~/.local/share/wallpapers and set; right click to just save.
+//  Wallhaven: search wallhaven.cc (SFW only). Click to preview (arrows flip through); Set downloads into
+//             ~/.local/share/wallpapers and applies it, Save only downloads.
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -23,8 +24,38 @@ ColumnLayout {
     property string categories: "111"   // general / anime / people
     property bool loading: false
     property var downloading: ({})      // id -> true
+    property int previewIndex: -1       // index into results while the preview is open
+    property string notice: ""          // short feedback after a save, cleared by noticeTimer
+
+    function say(text) { notice = text; noticeTimer.restart(); }
+
+    // moves a saved wallpaper to the Trash (recoverable); the one in use stays put
+    function trash(path) {
+        if (Wallpaper.path === path) { say("That's your current wallpaper: set another one first"); return; }
+        trasher.command = ["gio", "trash", "--", path];
+        trasher.running = true;
+    }
+    Process {
+        id: trasher
+        onExited: code => {
+            root.refreshMine();
+            root.say(code === 0 ? "Moved to Trash" : "Couldn't delete it");
+        }
+    }
+    Timer { id: noticeTimer; interval: 3000; onTriggered: root.notice = "" }
 
     spacing: 12
+
+    function openPreview(i) {
+        previewIndex = i;
+        preview.forceActiveFocus();
+    }
+    function step(d) {
+        const n = previewIndex + d;
+        if (n >= 0 && n < results.length) previewIndex = n;
+        // near the end of what's loaded: fetch the next page so browsing can continue
+        if (n >= results.length - 3 && !loading && page < lastPage) { page += 1; search(false); }
+    }
 
     function refreshMine() { finder.running = true; }
 
@@ -49,8 +80,10 @@ ColumnLayout {
         const dest = folder + "/wallhaven-" + item.id + ext;
         if (mine.includes(dest)) {
             if (apply) Wallpaper.set(dest);
+            else say("Already in My wallpapers");
             return;
         }
+        say("Downloading…");
         const d = Object.assign({}, downloading);
         d[item.id] = true;
         downloading = d;
@@ -98,8 +131,9 @@ ColumnLayout {
                 root.downloading = d;
                 if (code === 0) {
                     root.refreshMine();
-                    if (apply) Wallpaper.set(dest);
-                }
+                    if (apply) { Wallpaper.set(dest); root.say("Set as wallpaper"); }
+                    else root.say("Saved to My wallpapers");
+                } else root.say("Download failed, try again");
                 destroy();
             }
         }
@@ -178,10 +212,13 @@ ColumnLayout {
         }
     }
 
+    Item {
+    Layout.fillWidth: true
+    Layout.fillHeight: true
+
     GridView {
         id: grid
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        anchors.fill: parent
         clip: true
         cellWidth: width / 4
         cellHeight: cellWidth * 0.62
@@ -197,6 +234,7 @@ ColumnLayout {
         delegate: Item {
             id: cell
             required property var modelData
+            required property int index
             readonly property bool isRemote: root.source === "wallhaven"
             readonly property string full: isRemote ? root.folder + "/wallhaven-" + modelData.id + modelData.path.slice(modelData.path.lastIndexOf(".")) : modelData
             readonly property bool current: Wallpaper.path === full
@@ -247,23 +285,106 @@ ColumnLayout {
                 }
 
                 MouseArea {
+                    id: cellMouse
                     anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: mouse => {
+                    onClicked: {
                         if (!cell.isRemote) Wallpaper.set(cell.modelData);
-                        else root.download(cell.modelData, mouse.button === Qt.LeftButton);
+                        else root.openPreview(cell.index);
+                    }
+                }
+
+                // delete (to Trash), shown on hover in My wallpapers
+                Rectangle {
+                    visible: !cell.isRemote && (cellMouse.containsMouse || delMouse.containsMouse)
+                    anchors { right: parent.right; top: parent.top; margins: 6 }
+                    width: 28; height: 28; radius: 9
+                    color: delMouse.containsMouse ? "#C9463F" : Qt.rgba(0, 0, 0, 0.6)
+                    Icon { anchors.centerIn: parent; name: "delete"; font.pixelSize: 16; color: "white" }
+                    MouseArea {
+                        id: delMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.trash(cell.modelData)
                     }
                 }
             }
         }
     }
 
+    // big preview for Wallhaven results
+    Rectangle {
+        id: preview
+        readonly property var item: root.previewIndex >= 0 && root.previewIndex < root.results.length ? root.results[root.previewIndex] : null
+        readonly property string dest: item ? root.folder + "/wallhaven-" + item.id + item.path.slice(item.path.lastIndexOf(".")) : ""
+        visible: item !== null && root.source === "wallhaven"
+        anchors.fill: parent
+        radius: 16
+        color: Theme.surface
+        focus: visible
+        Keys.onEscapePressed: root.previewIndex = -1
+        Keys.onLeftPressed: root.step(-1)
+        Keys.onRightPressed: root.step(1)
+
+        MouseArea { anchors.fill: parent }   // keeps clicks from reaching the grid underneath
+
+        // small thumbnail first, sharp version on top once it has loaded
+        Image {
+            anchors { fill: parent; margins: 12; bottomMargin: 58 }
+            source: preview.item ? preview.item.thumbs.large : ""
+            fillMode: Image.PreserveAspectFit
+            asynchronous: true
+        }
+        Image {
+            id: sharp
+            anchors { fill: parent; margins: 12; bottomMargin: 58 }
+            source: preview.item ? preview.item.path : ""
+            sourceSize.width: 1600
+            fillMode: Image.PreserveAspectFit
+            asynchronous: true
+        }
+
+        RowLayout {
+            anchors { left: parent.left; right: parent.right; bottom: parent.bottom; margins: 12 }
+            spacing: 8
+            Chip { onClicked: root.step(-1); Icon { name: "chevron_left"; color: Theme.text } }
+            Chip { onClicked: root.step(1); Icon { name: "chevron_right"; color: Theme.text } }
+            Label {
+                Layout.fillWidth: true
+                text: preview.item ? preview.item.resolution + (sharp.status === Image.Loading ? " · loading…" : "") : ""
+                color: Theme.outline
+                font.pixelSize: 12
+            }
+            Chip {
+                visible: root.mine.includes(preview.dest)
+                onClicked: root.trash(preview.dest)
+                Icon { name: "delete"; color: Theme.text }
+                Label { text: "Delete"; color: Theme.text }
+            }
+            Chip {
+                onClicked: root.download(preview.item, false)
+                Icon { name: root.mine.includes(preview.dest) ? "download_done" : "download"; color: Theme.text }
+                Label { text: root.mine.includes(preview.dest) ? "Saved" : "Save"; color: Theme.text }
+            }
+            Chip {
+                highlighted: true
+                onClicked: root.download(preview.item, true)
+                Icon { name: "wallpaper"; color: Theme.textOnPrimary }
+                Label { text: Wallpaper.path === preview.dest ? "Current" : "Set"; color: Theme.textOnPrimary }
+            }
+            Chip { onClicked: root.previewIndex = -1; Icon { name: "close"; color: Theme.text } }
+        }
+    }
+    }
+
     Label {
         Layout.alignment: Qt.AlignHCenter
-        text: root.source === "mine"
-            ? "Click to set · files in ~/.local/share/wallpapers"
-            : root.loading ? "Loading…" : "Click: download + set · Right click: save only · scroll for more"
+        text: root.notice !== "" ? root.notice
+            : root.source === "mine"
+            ? "Click to set · hover for delete · files in ~/.local/share/wallpapers"
+            : root.loading ? "Loading…" : "Click to preview · ← → to browse · scroll for more"
         color: Theme.outline
         font.pixelSize: 11
     }
