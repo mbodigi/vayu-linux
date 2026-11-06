@@ -48,8 +48,6 @@ PanelWindow {
             color: Theme.textMuted
         }
 
-        NowPlaying { flat: bar.mac }
-
         Tray { flat: bar.mac }
 
         Coffee { barWindow: bar; flat: bar.mac }

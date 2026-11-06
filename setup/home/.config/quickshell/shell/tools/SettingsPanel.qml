@@ -166,7 +166,6 @@ PanelWindow {
             Toggle { label: "Show CPU"; key: "showCpu" }
             Toggle { label: "Show RAM"; key: "showRam" }
             Toggle { label: "Show network speed"; key: "showNet" }
-            Toggle { label: "Show now playing"; key: "showMedia" }
 
             Heading { text: "Color style (from wallpaper)" }
             Flow {

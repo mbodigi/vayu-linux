@@ -1,4 +1,4 @@
-// Control center: volume/brightness sliders, quick toggles, Wi-Fi, Bluetooth and sound-device lists. (Coffee lives on the bar only.)
+// Control center: volume/brightness sliders, now playing, quick toggles, Wi-Fi, Bluetooth and sound-device lists. (Coffee lives on the bar only.)
 // Toggle with: qs -c shell ipc call control toggle
 import QtQuick
 import QtQuick.Layouts
@@ -102,60 +102,6 @@ PanelWindow {
                     Icon { name: "settings"; color: Theme.text }
                     Label { text: "Settings"; color: Theme.text }
                 }
-            }
-
-            // sliders
-            // volume: click the speaker for the output/input drop-down, right-click it to mute
-            Slider {
-                Layout.fillWidth: true
-                icon: Audio.muted ? "volume_off" : "volume_up"
-                value: Audio.muted ? 0 : Audio.volume
-                expandable: true
-                expanded: root.section === "sound"
-                onMoved: v => Audio.setVolume(v)
-                onIconClicked: root.section = root.section === "sound" ? "" : "sound"
-                onIconRightClicked: Audio.toggleMute()
-            }
-            // sound drop-down: pick the output (speakers, headphones, HDMI, Bluetooth) and the input
-            ColumnLayout {
-                Layout.fillWidth: true
-                visible: root.section === "sound"
-                spacing: 4
-
-                Label { text: "Output"; color: Theme.textMuted; font.pixelSize: 12 }
-                Repeater {
-                    model: Audio.outputs
-                    ListRow {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        icon: /bluez/i.test(modelData.name) ? "headphones" : /hdmi|displayport/i.test(modelData.name) ? "tv" : "speaker"
-                        title: Audio.label(modelData)
-                        detail: modelData === Audio.sink ? "In use" : ""
-                        highlighted: modelData === Audio.sink
-                        onClicked: Audio.setOutput(modelData)
-                    }
-                }
-
-                Label { text: "Input"; color: Theme.textMuted; font.pixelSize: 12; Layout.topMargin: 6 }
-                Repeater {
-                    model: Audio.inputs
-                    ListRow {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        icon: "mic"
-                        title: Audio.label(modelData)
-                        detail: modelData === Audio.source ? "In use" : ""
-                        highlighted: modelData === Audio.source
-                        onClicked: Audio.setInput(modelData)
-                    }
-                }
-            }
-
-            Slider {
-                Layout.fillWidth: true
-                icon: "brightness_6"
-                value: Brightness.level
-                onMoved: v => Brightness.set(v)
             }
 
             // toggle tiles
@@ -334,6 +280,124 @@ PanelWindow {
                             target: modelData
                             function onPairedChanged() { if (modelData.paired && !modelData.connected) modelData.connect(); }
                         }
+                    }
+                }
+            }
+
+            // sliders (brightness, then volume), like Android
+            Slider {
+                Layout.fillWidth: true
+                icon: "brightness_6"
+                value: Brightness.level
+                onMoved: v => Brightness.set(v)
+            }
+
+            // volume: click the speaker for the output/input drop-down, right-click it to mute
+            Slider {
+                Layout.fillWidth: true
+                icon: Audio.muted ? "volume_off" : "volume_up"
+                value: Audio.muted ? 0 : Audio.volume
+                expandable: true
+                expanded: root.section === "sound"
+                onMoved: v => Audio.setVolume(v)
+                onIconClicked: root.section = root.section === "sound" ? "" : "sound"
+                onIconRightClicked: Audio.toggleMute()
+            }
+            // sound drop-down: pick the output (speakers, headphones, HDMI, Bluetooth) and the input
+            ColumnLayout {
+                Layout.fillWidth: true
+                visible: root.section === "sound"
+                spacing: 4
+
+                Label { text: "Output"; color: Theme.textMuted; font.pixelSize: 12 }
+                Repeater {
+                    model: Audio.outputs
+                    ListRow {
+                        required property var modelData
+                        Layout.fillWidth: true
+                        icon: /bluez/i.test(modelData.name) ? "headphones" : /hdmi|displayport/i.test(modelData.name) ? "tv" : "speaker"
+                        title: Audio.label(modelData)
+                        detail: modelData === Audio.sink ? "In use" : ""
+                        highlighted: modelData === Audio.sink
+                        onClicked: Audio.setOutput(modelData)
+                    }
+                }
+
+                Label { text: "Input"; color: Theme.textMuted; font.pixelSize: 12; Layout.topMargin: 6 }
+                Repeater {
+                    model: Audio.inputs
+                    ListRow {
+                        required property var modelData
+                        Layout.fillWidth: true
+                        icon: "mic"
+                        title: Audio.label(modelData)
+                        detail: modelData === Audio.source ? "In use" : ""
+                        highlighted: modelData === Audio.source
+                        onClicked: Audio.setInput(modelData)
+                    }
+                }
+            }
+
+            // now playing: only while a player has a track; thin seek bar underneath
+            ColumnLayout {
+                id: media
+                readonly property var player: Media.player
+                Layout.fillWidth: true
+                visible: (player?.trackTitle ?? "") !== ""
+                spacing: 6
+
+                // MPRIS doesn't push position updates: ask for them while playing
+                Timer {
+                    running: media.visible && root.open && (media.player?.isPlaying ?? false)
+                    interval: 1000
+                    repeat: true
+                    onTriggered: media.player.positionChanged()
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 6
+
+                    Icon { name: "music_note"; color: Theme.textMuted }
+                    Column {
+                        Layout.fillWidth: true
+                        Label { width: parent.width; text: media.player?.trackTitle ?? "" }
+                        Label {
+                            width: parent.width
+                            visible: text !== ""
+                            text: media.player?.trackArtist ?? ""
+                            color: Theme.textMuted
+                            font.pixelSize: 12
+                        }
+                    }
+                    Chip { implicitHeight: 30; onClicked: Media.previous(); Icon { name: "skip_previous" } }
+                    Chip {
+                        implicitHeight: 30
+                        highlighted: true
+                        onClicked: Media.playPause()
+                        Icon { name: media.player?.isPlaying ? "pause" : "play_arrow"; color: Theme.textOnPrimary }
+                    }
+                    Chip { implicitHeight: 30; onClicked: Media.next(); Icon { name: "skip_next" } }
+                }
+
+                // click to seek where the player allows it
+                Rectangle {
+                    Layout.fillWidth: true
+                    visible: media.player?.lengthSupported ?? false
+                    implicitHeight: 4
+                    radius: 2
+                    color: Theme.outline
+                    Rectangle {
+                        height: parent.height
+                        radius: 2
+                        color: Theme.text
+                        width: media.player?.length > 0 ? parent.width * Math.min(1, media.player.position / media.player.length) : 0
+                    }
+                    MouseArea {
+                        anchors { fill: parent; topMargin: -8; bottomMargin: -8 }
+                        enabled: media.player?.canSeek ?? false
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: mouse => media.player.position = media.player.length * mouse.x / width
                     }
                 }
             }

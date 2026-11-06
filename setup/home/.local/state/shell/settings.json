@@ -9,7 +9,6 @@
   "showCpu": true,
   "showRam": true,
   "showNet": true,
-  "showMedia": true,
   "scheme": "scheme-monochrome",
   "barStyle": "mac",
   "dockPins": [
