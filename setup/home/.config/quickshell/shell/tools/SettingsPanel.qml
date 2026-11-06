@@ -116,7 +116,22 @@ PanelWindow {
             Stepper { label: "Screen off after"; key: "screenOffAC" }
             Stepper { label: "Sleep after"; key: "sleepAC"; step: 5 }
 
-            Heading { text: "Top bar" }
+            Heading { text: "Bar" }
+            RowLayout {
+                Layout.fillWidth: true
+                Label { Layout.fillWidth: true; text: "Position" }
+                Repeater {
+                    model: [{ id: "top", label: "Top" }, { id: "bottom", label: "Bottom" }]
+                    Chip {
+                        id: pos
+                        required property var modelData
+                        readonly property bool on: Settings.get("barPosition") === modelData.id
+                        highlighted: on
+                        onClicked: Settings.set("barPosition", modelData.id)
+                        Label { text: pos.modelData.label; color: pos.on ? Theme.textOnPrimary : Theme.text }
+                    }
+                }
+            }
             RowLayout {
                 Layout.fillWidth: true
                 Label { Layout.fillWidth: true; text: "Style" }
@@ -164,7 +179,7 @@ PanelWindow {
 
             Label {
                 Layout.topMargin: 6
-                text: "Wallpaper: Super+D → Wallpapers · Shortcuts: Super+Shift+/"
+                text: "Wallpapers: Super+Y · Overview: Super+D · Shortcuts: Super+Shift+/"
                 color: Theme.outline
                 font.pixelSize: 11
             }

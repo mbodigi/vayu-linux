@@ -14,6 +14,7 @@ Singleton {
         showCpu: true, showRam: true, showNet: true, showMedia: true,
         scheme: "scheme-monochrome",
         barStyle: "pills",  // pills | mac
+        barPosition: "top", // top | bottom; panels that open from the bar follow it
         dockPins: []        // desktop entry ids pinned to the dock, in order
     })
     property var values: defaults

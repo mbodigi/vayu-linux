@@ -1,4 +1,4 @@
-// Top bar: tags + window title on the left; media, tray, coffee, stats (CPU, RAM, network), battery, clock on the right.
+// Bar (top or bottom, see Settings): tags + window title on the left; media, tray, coffee, stats (CPU, RAM, network), battery, clock on the right.
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -8,18 +8,21 @@ PanelWindow {
     id: bar
 
     required property var modelData
-    screen: modelData
+    screen: modelData.screen
 
-    anchors { top: true; left: true; right: true }
+    readonly property bool atBottom: modelData.position === "bottom"
+    anchors { top: !atBottom; bottom: atBottom; left: true; right: true }
     readonly property bool mac: Settings.get("barStyle") === "mac"
 
     implicitHeight: mac ? 28 : 36
     color: mac ? Qt.rgba(Theme.surface.r, Theme.surface.g, Theme.surface.b, 0.7) : Theme.surface
 
-    // faint gray line along the bottom of the flat bar
+    // faint gray line along the screen-facing edge of the flat bar
     Rectangle {
         visible: bar.mac
-        anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors { left: parent.left; right: parent.right }
+        anchors.top: bar.atBottom ? parent.top : undefined
+        anchors.bottom: bar.atBottom ? undefined : parent.bottom
         height: 1
         color: Qt.rgba(1, 1, 1, 0.08)
     }

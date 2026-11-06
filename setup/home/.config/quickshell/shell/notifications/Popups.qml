@@ -9,8 +9,9 @@ PanelWindow {
 
     visible: Notifs.popups.length > 0 && !Notifs.centerOpen
     color: "transparent"
-    anchors { top: true; right: true }
-    margins { top: 6; right: 8 }
+    readonly property bool atBottom: Settings.get("barPosition") === "bottom"
+    anchors { top: !atBottom; bottom: atBottom; right: true }
+    margins { top: 6; bottom: 6; right: 8 }
     exclusionMode: ExclusionMode.Normal
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "shell-notifications"

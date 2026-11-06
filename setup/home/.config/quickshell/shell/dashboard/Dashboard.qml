@@ -1,5 +1,5 @@
 // Dashboard (Super+D): Overview, Wallpapers.
-// Toggle with: qs -c shell ipc call dashboard toggle   (or openTab overview|wallpapers|wallhaven)
+// Toggle with: qs -c shell ipc call dashboard toggleTab overview|wallpapers   (or toggle, openTab overview|wallpapers|wallhaven)
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -27,6 +27,13 @@ PanelWindow {
     IpcHandler {
         target: "dashboard"
         function toggle(): void { root.open = !root.open; }
+        // each shortcut owns a tab: press again to close, or switch when the other tab is showing
+        function toggleTab(tab: string): void {
+            if (root.open && root.tab === tab) { root.open = false; return; }
+            root.wallSource = "mine";
+            root.tab = tab;
+            root.open = true;
+        }
         function openTab(tab: string): void {
             root.wallSource = tab === "wallhaven" ? "wallhaven" : "mine";
             root.tab = tab === "wallhaven" ? "wallpapers" : tab;
@@ -42,8 +49,10 @@ PanelWindow {
     Rectangle {
         id: panel
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
+        anchors.top: Settings.get("barPosition") === "bottom" ? undefined : parent.top
+        anchors.bottom: Settings.get("barPosition") === "bottom" ? parent.bottom : undefined
         anchors.topMargin: 6
+        anchors.bottomMargin: 6
         width: 1000
         height: 640
         radius: 24

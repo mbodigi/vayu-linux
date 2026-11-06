@@ -259,6 +259,7 @@ elfutils-libs
 emacs-filesystem
 enchant2
 ethtool
+evince
 exempi
 exfatprogs
 exiv2

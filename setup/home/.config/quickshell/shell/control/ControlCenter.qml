@@ -71,7 +71,10 @@ PanelWindow {
 
     Rectangle {
         id: panel
-        anchors { top: parent.top; right: parent.right; topMargin: 6; rightMargin: 8 }
+        // opens next to the bar, wherever it is
+        anchors { right: parent.right; rightMargin: 8; topMargin: 6; bottomMargin: 6 }
+        anchors.top: Settings.get("barPosition") === "bottom" ? undefined : parent.top
+        anchors.bottom: Settings.get("barPosition") === "bottom" ? parent.bottom : undefined
         width: 420
         height: body.implicitHeight + 28
         radius: 22

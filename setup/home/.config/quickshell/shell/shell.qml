@@ -20,8 +20,10 @@ ShellRoot {
 
     Background {}
 
+    // one bar per screen; the model changes with the bar's position because a layer surface
+    // can't move to another edge once it's mapped, so the bars are recreated instead
     Variants {
-        model: Quickshell.screens
+        model: Settings.loaded ? Quickshell.screens.map(s => ({ screen: s, position: Settings.get("barPosition") })) : []
         Bar {}
     }
 
